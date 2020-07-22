@@ -9,7 +9,7 @@ module ExercismConfig
         h[item['id']] = item['value']
       end
 
-      Config.new(data)
+      Exercism::Config.new(data)
     end
 
     memoize

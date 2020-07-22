@@ -1,6 +1,6 @@
 require "test_helper"
 
-module ExercismConfig
+module Exercism
   class ConfigTest < Minitest::Test
     def test_accessors
       config = Config.new('foo' => 'bar')

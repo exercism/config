@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    exercism_config (0.2.0)
+    exercism_config (0.4.0)
       aws-sdk-dynamodb (~> 1.0)
       mandate
       zeitwerk
@@ -24,8 +24,9 @@ GEM
     jmespath (1.4.0)
     mandate (0.3.0)
     minitest (5.14.1)
+    mocha (1.11.2)
     rake (12.3.3)
-    zeitwerk (2.3.0)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby
@@ -34,6 +35,7 @@ DEPENDENCIES
   bundler (~> 2.1)
   exercism_config!
   minitest (~> 5.0)
+  mocha
   rake (~> 12.0)
 
 BUNDLED WITH

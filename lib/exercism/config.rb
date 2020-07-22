@@ -1,4 +1,4 @@
-module ExercismConfig
+module Exercism
   class Config < OpenStruct
     def to_json
       to_h.to_json

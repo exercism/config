@@ -8,8 +8,8 @@ require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
 loader.setup
 
-module ExercismConfig
+module Exercism
   def self.config
-    @config ||= Retrieve.()
+    @config ||= ExercismConfig::Retrieve.()
   end
 end
