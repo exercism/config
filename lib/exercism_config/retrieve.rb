@@ -9,7 +9,11 @@ module ExercismConfig
         h[item['id']] = item['value']
       end
 
+      data[:retrieved] = true
       Exercism::Config.new(data)
+    rescue => e
+      p "No Exercism config retrieved"
+      Exercism::Config.new(retrieved: false)
     end
 
     memoize
