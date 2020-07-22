@@ -10,8 +10,6 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://exercism.io"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/exercism/config"
 
@@ -23,4 +21,12 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "aws-sdk-dynamodb", "~> 1.0"
+  spec.add_dependency "mandate"
+  spec.add_dependency "zeitwerk"
+
+  spec.add_development_dependency "bundler", "~> 2.1"
+  spec.add_development_dependency "rake", "~> 12.3"
+  spec.add_development_dependency "minitest", "~> 5.0"
 end

@@ -1,36 +1,24 @@
-# ExercismConfig
+# Exercism Config
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/exercism_config`. To experiment with that code, run `bin/console` for an interactive prompt.
+When terraform creates Exercism's infrastructure, it writes endpoints and DNS entries to DynamoDB. 
+This gem allows you to trivially retrieve that data.
 
-TODO: Delete this and the text above, and describe your gem
+When running on AWS, simply ensure the machine has read-access to the relevant table (currently hardcoded to `config`). 
+On a local machine specify the AWS_PROFILE environment variable with the relevant profile stored in your `.aws/credentials`.
 
-## Installation
+## Usage 
 
-Add this line to your application's Gemfile:
-
-```ruby
+Simply include this gem in your Gemfile, require it, and then refer to the object:
+```
+# Gemfile
 gem 'exercism_config'
+
+# Your code
+require 'exercism_config'
+ExercismConfig.config.webservers_alb_dns_name
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install exercism_config
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/exercism_config.
-
+To print out all the config from the command-line, you can run:
+```
+AWS_PROFILE=exercism_terraform ./bin/run
+```
