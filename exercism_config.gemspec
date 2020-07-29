@@ -18,8 +18,8 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = ["setup_exercism_config"]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "aws-sdk-dynamodb", "~> 1.0"
@@ -30,4 +30,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 12.3"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "mocha"
+
+  # This isn't a compulsary dependency
+  # but can be used if someone puts it in their
+  # own gemfile
+  spec.add_development_dependency "aws-sdk-s3"
 end
