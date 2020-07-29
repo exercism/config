@@ -1,3 +1,5 @@
+ENV["EXERCISM_ENV"] = "test"
+
 gem "minitest"
 require "minitest/autorun"
 require 'minitest/unit'
