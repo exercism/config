@@ -5,3 +5,4 @@ anycable_redis_url: redis://127.0.0.1:6379/1
 anycable_rpc_host: 127.0.0.1:50051
 rds_master_endpoint: 127.0.0.1
 rds_port: <%= ENV["MYSQL_PORT"] %>
+spi_url: http://127.0.0.1:3020
