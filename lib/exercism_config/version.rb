@@ -1,3 +1,3 @@
 module ExercismConfig
-  VERSION = "0.5.0"
+  VERSION = "0.17.0"
 end
