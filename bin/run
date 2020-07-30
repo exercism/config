@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler/setup"
-require "exercism_config"
-
-p ExercismConfig.config.to_h

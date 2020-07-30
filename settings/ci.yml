@@ -1,0 +1,7 @@
+aws_iterations_bucket: exercism-staging-iterations
+dynamodb_tooling_jobs_table: tooling_jobs
+tooling_orchestrator_url: http://127.0.0.1:3021
+anycable_redis_url: redis://127.0.0.1:6379/1
+anycable_rpc_host: 127.0.0.1:50051
+rds_master_endpoint: 127.0.0.1
+rds_port: <%= ENV["MYSQL_PORT"] %>

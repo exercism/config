@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "exercism_config"
+require 'erb'
+require 'yaml'
+
+env = ExercismConfig::DetermineEnvironment.()
+if env == :production
+  puts "Aborted! This script should not be run in production."
+  exit 
+end
+
+def create_table(client)
+  client.create_table(
+    table_name: :config,
+    attribute_definitions: [
+      {
+        attribute_name: "id", 
+        attribute_type: "S", 
+      },
+    ],
+    key_schema: [
+      {
+        attribute_name: "id", 
+        key_type: "HASH", 
+      }
+    ],
+    provisioned_throughput: {
+      read_capacity_units: 1, 
+      write_capacity_units: 1, 
+    }
+  )
+end
+
+def delete_table(client)
+  client.delete_table(
+    table_name: :config,
+  )
+end
+
+def set_config_value(client, id, value)
+  client.put_item(
+    table_name: :config,
+    item: {
+      id: id,
+      value: value
+    }
+  )
+end
+
+client = ExercismConfig::SetupDynamoDBClient.()
+
+begin
+  create_table(client)
+rescue Aws::DynamoDB::Errors::ResourceInUseException => e
+  if ARGV.include?("--force")
+    puts "Table exists. Recreating..."
+    delete_table(client)
+    create_table(client)
+    puts "Table recreated."
+  else
+    puts "Table exists. Not recreating."
+  end
+end
+
+settings_file_arg = ARGV.select{|arg|arg.start_with?("--settings-file=")}.first
+settings_file = 
+  if settings_file_arg
+    settings_file_arg.split("=").last
+  elsif ENV["EXERCISM_DOCKER"]
+    File.expand_path("../../settings/docker.yml", __FILE__)
+  elsif ENV["EXERCISM_CI"]
+    File.expand_path("../../settings/ci.yml", __FILE__)
+  else
+    File.expand_path("../../settings/development.yml", __FILE__)
+  end
+
+puts "Using settings file: #{settings_file}"
+settings = YAML.load(ERB.new(File.read(settings_file)).result)
+
+settings.each do |key, value|
+  set_config_value(client, key, value)
+end

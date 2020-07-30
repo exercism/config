@@ -19,8 +19,3 @@ require 'exercism_config'
 ExercismConfig.config.webservers_alb_dns_name
 ```
 
-To print out all the config from the command-line, you can run:
-
-```bash
-AWS_PROFILE=exercism_terraform ./bin/run
-```

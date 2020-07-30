@@ -29,7 +29,7 @@ class RetrieveTest < Minitest::Test
 
     Aws::DynamoDB::Client.expects(:new).with(
       region: 'eu-west-2',
-      endpoint: "http://localhost:3039",
+      endpoint: "http://localhost:3040",
       access_key_id: "FAKE", 
       secret_access_key: "FAKE"
     ).returns(client)
