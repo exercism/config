@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "exercism_config"
+require 'bundler/setup'
+require 'exercism_config'
 require 'erb'
 require 'yaml'
 
-env = ExercismConfig::DetermineEnvironment.()
+env = ExercismConfig::DetermineEnvironment.call
 if env == :production
-  puts "Aborted! This script should not be run in production."
-  exit 
+  puts 'Aborted! This script should not be run in production.'
+  exit
 end
 
 def create_table(client)
@@ -16,26 +16,26 @@ def create_table(client)
     table_name: :config,
     attribute_definitions: [
       {
-        attribute_name: "id", 
-        attribute_type: "S", 
-      },
+        attribute_name: 'id',
+        attribute_type: 'S'
+      }
     ],
     key_schema: [
       {
-        attribute_name: "id", 
-        key_type: "HASH", 
+        attribute_name: 'id',
+        key_type: 'HASH'
       }
     ],
     provisioned_throughput: {
-      read_capacity_units: 1, 
-      write_capacity_units: 1, 
+      read_capacity_units: 1,
+      write_capacity_units: 1
     }
   )
 end
 
 def delete_table(client)
   client.delete_table(
-    table_name: :config,
+    table_name: :config
   )
 end
 
@@ -49,31 +49,31 @@ def set_config_value(client, id, value)
   )
 end
 
-client = ExercismConfig::SetupDynamoDBClient.()
+client = ExercismConfig::SetupDynamoDBClient.call
 
 begin
   create_table(client)
 rescue Aws::DynamoDB::Errors::ResourceInUseException => e
-  if ARGV.include?("--force")
-    puts "Table exists. Recreating..."
+  if ARGV.include?('--force')
+    puts 'Table exists. Recreating...'
     delete_table(client)
     create_table(client)
-    puts "Table recreated."
+    puts 'Table recreated.'
   else
-    puts "Table exists. Not recreating."
+    puts 'Table exists. Not recreating.'
   end
 end
 
-settings_file_arg = ARGV.select{|arg|arg.start_with?("--settings-file=")}.first
-settings_file = 
+settings_file_arg = ARGV.select { |arg| arg.start_with?('--settings-file=') }.first
+settings_file =
   if settings_file_arg
-    settings_file_arg.split("=").last
-  elsif ENV["EXERCISM_DOCKER"]
-    File.expand_path("../../settings/docker.yml", __FILE__)
-  elsif ENV["EXERCISM_CI"]
-    File.expand_path("../../settings/ci.yml", __FILE__)
+    settings_file_arg.split('=').last
+  elsif ENV['EXERCISM_DOCKER']
+    File.expand_path('../settings/docker.yml', __dir__)
+  elsif ENV['EXERCISM_CI']
+    File.expand_path('../settings/ci.yml', __dir__)
   else
-    File.expand_path("../../settings/development.yml", __FILE__)
+    File.expand_path('../settings/development.yml', __dir__)
   end
 
 puts "Using settings file: #{settings_file}"

@@ -4,18 +4,18 @@ module ExercismConfig
 
     def call
       return generate_mock if Exercism.environment == :test
+
       retrieve_from_dynamodb
     end
 
     private
-
     def generate_mock
       require 'erb'
       require 'yaml'
 
-      filename = ENV["EXERCISM_DOCKER"] ? "test-docker" : "test-local"
+      filename = ENV['EXERCISM_DOCKER'] ? 'test-docker' : 'test-local'
       settings_file = File.expand_path("../../../settings/#{filename}.yml", __FILE__)
-      settings = YAML.load(ERB.new(File.read(settings_file)).result)
+      settings = YAML.safe_load(ERB.new(File.read(settings_file)).result)
 
       Exercism::Config.new(settings, {})
     end
@@ -23,7 +23,7 @@ module ExercismConfig
     def retrieve_from_dynamodb
       client = SetupDynamoDBClient.()
 
-      resp = client.scan({table_name: "config"})
+      resp = client.scan({ table_name: 'config' })
       items = resp.to_h[:items]
       data = items.each_with_object({}) do |item, h|
         h[item['id']] = item['value']
@@ -31,7 +31,7 @@ module ExercismConfig
 
       # Tweak things for dynamodb when we're running in test mode
       if Exercism.environment == :test
-        %w{dynamodb_tooling_jobs_table}.each do |key|
+        %w[dynamodb_tooling_jobs_table].each do |key|
           data[key] = "#{data[key]}-test"
         end
       end
@@ -40,11 +40,10 @@ module ExercismConfig
       Exercism::Config.new(data, aws_settings)
     rescue Exercism::ConfigError
       raise
-    rescue => e
+    rescue StandardError => e
       raise Exercism::ConfigError, "Exercism Config could not be loaded: #{e.message}"
     end
 
-    private
     memoize
     def aws_client
       config = {
@@ -53,10 +52,9 @@ module ExercismConfig
         endpoint: endpoint,
         access_key_id: aws_access_key_id,
         secret_access_key: aws_secret_access_key
-      }.select {|k,v|v}
+      }.select { |_k, v| v }
 
       Aws::DynamoDB::Client.new(config)
     end
   end
 end
-

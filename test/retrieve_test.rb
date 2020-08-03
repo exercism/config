@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class RetrieveTest < Minitest::Test
   def test_config_is_set
@@ -18,7 +18,7 @@ class RetrieveTest < Minitest::Test
     Exercism.stubs(environment: :production)
 
     Aws::DynamoDB::Client.expects(:new).with(
-      region: 'eu-west-2',
+      region: 'eu-west-2'
     ).returns(client)
 
     assert ExercismConfig::Retrieve.()
@@ -29,18 +29,16 @@ class RetrieveTest < Minitest::Test
 
     Aws::DynamoDB::Client.expects(:new).with(
       region: 'eu-west-2',
-      endpoint: "http://localhost:3040",
-      access_key_id: "FAKE", 
-      secret_access_key: "FAKE"
+      endpoint: 'http://localhost:3040',
+      access_key_id: 'FAKE',
+      secret_access_key: 'FAKE'
     ).returns(client)
 
     assert ExercismConfig::Retrieve.()
   end
 
-
   def client
-    resp = mock(to_h: {items: []})
+    resp = mock(to_h: { items: [] })
     mock(scan: resp)
   end
 end
-
