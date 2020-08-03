@@ -3,6 +3,22 @@ module ExercismConfig
     include Mandate
 
     def call
+      return generate_mock if Exercism.environment == :test
+      retrieve_from_dynamodb
+    end
+
+    private
+
+    def generate_mock
+      require 'erb'
+      require 'yaml'
+
+      settings_file = File.expand_path("../../../settings/test.yml", __FILE__)
+      settings = YAML.load(ERB.new(File.read(settings_file)).result)
+      Exercism::Config.new(settings, {})
+    end
+
+    def retrieve_from_dynamodb
       client = SetupDynamoDBClient.()
 
       resp = client.scan({table_name: "config"})

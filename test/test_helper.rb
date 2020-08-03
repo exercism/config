@@ -1,4 +1,6 @@
-ENV["EXERCISM_ENV"] = "test"
+# We want to run these tests to simulate a production environment
+# This is different to how running tests normally works.
+ENV["EXERCISM_ENV"] = "production"
 
 gem "minitest"
 require "minitest/autorun"

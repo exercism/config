@@ -1,0 +1,7 @@
+aws_iterations_bucket: some-bucket
+dynamodb_tooling_jobs_table: some_table
+tooling_orchestrator_url: http://some-url:1234
+anycable_redis_url: redis://some-redis:1234/9
+anycable_rpc_host: 1.2.3.4:9876543
+rds_master_endpoint: some_url
+rds_port: 1234
