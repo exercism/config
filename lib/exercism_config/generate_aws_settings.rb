@@ -8,16 +8,14 @@ module ExercismConfig
         profile: profile,
         access_key_id: aws_access_key_id,
         secret_access_key: aws_secret_access_key
-      }.select {|k,v|v}
+      }.select { |_k, v| v }
     end
 
     memoize
     def aws_access_key_id
       case Exercism.environment
       when :development, :test
-        "FAKE"
-      else 
-        nil
+        'FAKE'
       end
     end
 
@@ -25,9 +23,7 @@ module ExercismConfig
     def aws_secret_access_key
       case Exercism.environment
       when :development, :test
-        "FAKE"
-      else 
-        nil
+        'FAKE'
       end
     end
 
@@ -35,7 +31,7 @@ module ExercismConfig
     def profile
       case Exercism.environment
       when :production
-        "exercism_staging"
+        'exercism_staging'
       end
     end
   end
