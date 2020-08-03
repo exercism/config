@@ -18,9 +18,12 @@ Gem::Specification.new do |spec|
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
-  spec.bindir        = 'bin'
-  spec.executables   = ['setup_exercism_config']
-  spec.require_paths = ['lib']
+  spec.bindir        = "bin"
+  spec.executables   = [
+    "setup_exercism_config",
+    "setup_exercism_local_aws",
+  ]
+  spec.require_paths = ["lib"]
 
   spec.add_dependency 'aws-sdk-dynamodb', '~> 1.0'
   spec.add_dependency 'mandate'
