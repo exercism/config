@@ -13,8 +13,10 @@ module ExercismConfig
       require 'erb'
       require 'yaml'
 
-      settings_file = File.expand_path("../../../settings/test.yml", __FILE__)
+      filename = ENV["EXERCISM_DOCKER"] ? "test-docker" : "test-local"
+      settings_file = File.expand_path("../../../settings/#{filename}.yml", __FILE__)
       settings = YAML.load(ERB.new(File.read(settings_file)).result)
+
       Exercism::Config.new(settings, {})
     end
 

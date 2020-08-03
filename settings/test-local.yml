@@ -1,0 +1,9 @@
+anycable_redis_url: redis://some_anycable_redis_url:1234/9
+anycable_rpc_host: 1.2.3.4:9876543
+aws_iterations_bucket: some-iterations-bucket
+dynamodb_tooling_jobs_table: some_tooling_table
+spi_url: http://some_url:1234
+tooling_orchestrator_url: http://some_orchestrator_url:1234
+
+mysql_master_endpoint: localhost
+mysql_socket: /tmp/mysql.sock
