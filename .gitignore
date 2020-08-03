@@ -6,5 +6,6 @@
 /pkg/
 /spec/reports/
 /tmp/
+node_modules/
 
 exercism_config-*.gem
