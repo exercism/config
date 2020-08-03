@@ -20,7 +20,9 @@ module ExercismConfig
     memoize
     def config_endpoint
       return nil unless %i[development test].include?(Exercism.environment)
-      return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}" if ENV['EXERCISM_CI']
+      if Exercism.environment == :test && ENV['EXERCISM_CI']
+        return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}" 
+      end
 
       host = ENV['EXERCISM_DOCKER'] ? 'dynamodb:8000' : 'localhost:3040'
       "http://#{host}"
