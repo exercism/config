@@ -8,3 +8,7 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+task :lint do
+  sh 'rubocop --except Metrics'
+end
