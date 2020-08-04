@@ -19,9 +19,9 @@ Gem::Specification.new do |spec|
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
   spec.bindir        = "bin"
-  spec.executables   = [
-    "setup_exercism_config",
-    "setup_exercism_local_aws",
+  spec.executables   = %w[
+    setup_exercism_config
+    setup_exercism_local_aws
   ]
   spec.require_paths = ["lib"]
 

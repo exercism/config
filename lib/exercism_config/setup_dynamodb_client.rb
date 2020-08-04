@@ -21,7 +21,7 @@ module ExercismConfig
     def config_endpoint
       return nil unless %i[development test].include?(Exercism.environment)
       if Exercism.environment == :test && ENV['EXERCISM_CI']
-        return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}" 
+        return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}"
       end
 
       host = ENV['EXERCISM_DOCKER'] ? 'dynamodb:8000' : 'localhost:3040'
