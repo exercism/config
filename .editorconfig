@@ -1,0 +1,10 @@
+[*.md]
+end_of_line = lf
+trim_trailing_whitespace = true
+
+[*.rb]
+end_of_line = lf
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
