@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    exercism_config (0.29.0)
+    exercism_config (0.29.1)
       aws-sdk-dynamodb (~> 1.0)
       mandate
       zeitwerk
