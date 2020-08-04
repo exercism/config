@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-minitest'
   spec.add_development_dependency 'rubocop-performance'
+  spec.add_development_dependency 'gem-release'
 
   # This isn't a compulsary dependency
   # but can be used if someone puts it in their
