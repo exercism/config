@@ -2,6 +2,12 @@
 # This is different to how running tests normally works.
 ENV['EXERCISM_ENV'] = 'production'
 
+# This must happen above the env require below
+if ENV["CAPTURE_CODE_COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/unit'
