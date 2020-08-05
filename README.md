@@ -1,5 +1,8 @@
 # Exercism Config
 
+![Tests](https://github.com/exercism/config/workflows/Tests/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/exercism_config.svg)](https://badge.fury.io/rb/exercism_config)
+
 When terraform creates Exercism's infrastructure, it writes endpoints and DNS entries to DynamoDB.
 This gem allows you to trivially retrieve that data.
 
