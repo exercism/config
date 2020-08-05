@@ -71,7 +71,7 @@ settings_file =
   elsif ENV['EXERCISM_DOCKER']
     File.expand_path('../settings/docker.yml', __dir__)
   elsif ENV['EXERCISM_CI']
-    File.expand_path('../settings/ci.yml', __dir__)
+    File.expand_path('../settings/test-ci.yml', __dir__)
   else
     File.expand_path('../settings/development.yml', __dir__)
   end
