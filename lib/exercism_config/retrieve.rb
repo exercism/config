@@ -13,7 +13,14 @@ module ExercismConfig
       require 'erb'
       require 'yaml'
 
-      filename = ENV['EXERCISM_DOCKER'] ? 'test-docker' : 'test-local'
+      filename = if ENV["EXERCISM_CI"]
+                   'test-ci'
+                 elsif ENV["EXERCISM_DOCKER"]
+                   'test-docker'
+                 else
+                   'test-local'
+                 end
+
       settings_file = File.expand_path("../../../settings/#{filename}.yml", __FILE__)
       settings = YAML.safe_load(ERB.new(File.read(settings_file)).result)
 
