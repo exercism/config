@@ -4,3 +4,9 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rake', '~> 12.0'
+gem 'simplecov', '~> 0.17.0'
+
+gem 'gem-release'
+gem 'rubocop'
+gem 'rubocop-minitest'
+gem 'rubocop-performance'

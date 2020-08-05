@@ -2,7 +2,8 @@ anycable_redis_url: redis://127.0.0.1:6379/1
 anycable_rpc_host: 127.0.0.1:50051
 aws_iterations_bucket: exercism-staging-iterations
 dynamodb_tooling_jobs_table: tooling_jobs
-mysql_master_endpoint: 127.0.0.1
-mysql_port: <%= ENV["MYSQL_PORT"] %>
 spi_url: http://127.0.0.1:3020
 tooling_orchestrator_url: http://127.0.0.1:3021
+
+mysql_master_endpoint: 127.0.0.1
+mysql_port: <%= ENV["MYSQL_PORT"] %>
