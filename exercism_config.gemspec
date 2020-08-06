@@ -1,7 +1,7 @@
 require_relative 'lib/exercism_config/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'exercism_config'
+  spec.name          = 'exercism-config'
   spec.version       = ExercismConfig::VERSION
   spec.authors       = ['Jeremy Walker']
   spec.email         = ['jez.walker@gmail.com']
