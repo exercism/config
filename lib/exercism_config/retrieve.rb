@@ -3,7 +3,7 @@ module ExercismConfig
     include Mandate
 
     def call
-      return generate_mock if Exercism.environment == :test
+      return generate_mock if Exercism.env.test?
 
       retrieve_from_dynamodb
     end
@@ -37,7 +37,7 @@ module ExercismConfig
       end
 
       # Tweak things for dynamodb when we're running in test mode
-      if Exercism.environment == :test
+      if Exercism.env.test?
         %w[dynamodb_tooling_jobs_table].each do |key|
           data[key] = "#{data[key]}-test"
         end

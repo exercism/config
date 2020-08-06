@@ -13,26 +13,17 @@ module ExercismConfig
 
     memoize
     def aws_access_key_id
-      case Exercism.environment
-      when :development, :test
-        'FAKE'
-      end
+      Exercism.env.production? ? nil : 'FAKE'
     end
 
     memoize
     def aws_secret_access_key
-      case Exercism.environment
-      when :development, :test
-        'FAKE'
-      end
+      Exercism.env.production? ? nil : 'FAKE'
     end
 
     memoize
     def profile
-      case Exercism.environment
-      when :production
-        'exercism_staging'
-      end
+      Exercism.env.production? ? nil : 'exercism_staging'
     end
   end
 end

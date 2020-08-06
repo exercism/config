@@ -3,7 +3,7 @@ require "bundler/setup"
 require "exercism-config"
 
 # Only allow this to run in development
-return unless Exercism.environment == :development
+return unless Exercism.env.development?
 
 puts "Create AWS/DynamoDB tables..."
 

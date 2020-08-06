@@ -15,14 +15,11 @@ module ExercismConfig
     end
 
     private
-    attr_reader :environment
 
     memoize
     def config_endpoint
-      return nil unless %i[development test].include?(Exercism.environment)
-      if Exercism.environment == :test && ENV['EXERCISM_CI']
-        return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}"
-      end
+      return nil if Exercism.env.production?
+      return "http://127.0.0.1:#{ENV['DYNAMODB_PORT']}" if Exercism.env.test? && ENV['EXERCISM_CI']
 
       host = ENV['EXERCISM_DOCKER'] ? 'dynamodb:8000' : 'localhost:3040'
       "http://#{host}"
