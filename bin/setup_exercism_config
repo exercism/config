@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'exercism_config'
+require 'exercism-config'
 require 'erb'
 require 'yaml'
 

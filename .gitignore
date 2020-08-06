@@ -9,4 +9,4 @@
 node_modules/
 Gemfile.lock
 
-exercism_config-*.gem
+exercism-config-*.gem

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
-require "exercism_config"
+require "exercism-config"
 
 # Only allow this to run in development
 return unless Exercism.environment == :development
