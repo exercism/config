@@ -17,7 +17,7 @@ def create_table(client)
     attribute_definitions: [
       {
         attribute_name: 'id',
-        attribute_type: 'S'
+        attribute_type: 'S' 
       }
     ],
     key_schema: [
