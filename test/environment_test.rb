@@ -8,9 +8,9 @@ module ExercismConfig
       assert env.development?
       assert_equal "development", env.to_s
       assert_equal "development", env.inspect
-      assert env == "development"
-      assert env == :development
-      
+      assert_equal env, "development"
+      assert_equal env, :development
+
       refute env.test?
       refute env.production?
       refute env == "production"
@@ -22,9 +22,9 @@ module ExercismConfig
       assert env.test?
       assert_equal "test", env.to_s
       assert_equal "test", env.inspect
-      assert env == "test"
-      assert env == :test
-      
+      assert_equal env, "test"
+      assert_equal env, :test
+
       refute env.development?
       refute env.production?
       refute env == "production"
@@ -36,9 +36,9 @@ module ExercismConfig
       assert env.production?
       assert_equal "production", env.to_s
       assert_equal "production", env.inspect
-      assert env == "production"
-      assert env == :production
-      
+      assert_equal env, "production"
+      assert_equal env, :production
+
       refute env.test?
       refute env.development?
       refute env == "development"

@@ -9,4 +9,3 @@ class ExercismTest < Minitest::Test
     assert Exercism.environment
   end
 end
-

@@ -56,6 +56,10 @@ Style/Documentation:
 Style/DocumentationMethod:
   Enabled: false
 
+Style/GuardClause:
+  Exclude:
+    - lib/exercism_config/environment.rb
+
 Style/IfUnlessModifier:
   Exclude:
     - "lib/exercism_config/setup_dynamodb_client.rb"

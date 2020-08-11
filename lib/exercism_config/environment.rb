@@ -1,6 +1,6 @@
 module ExercismConfig
   class Environment
-    ALLOWED_ENVS = %{development test production}
+    ALLOWED_ENVS = %(development test production).freeze
     private_constant :ALLOWED_ENVS
 
     def initialize(raw_env)

@@ -15,7 +15,6 @@ module ExercismConfig
     end
 
     private
-
     memoize
     def config_endpoint
       return nil if Exercism.env.production?
