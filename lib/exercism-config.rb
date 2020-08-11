@@ -18,7 +18,7 @@ module Exercism
   class ConfigError < RuntimeError; end
 
   def self.env
-    @environment ||= ExercismConfig::DetermineEnvironment.()
+    @env ||= ExercismConfig::DetermineEnvironment.()
   end
 
   def self.environment

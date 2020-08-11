@@ -11,7 +11,26 @@ module Exercism
       config = Config.new({ 'foo' => 'bar' }, { k: 'v' })
       expected = {
         'foo' => 'bar',
-        'aws_settings' => { 'k' => 'v' }
+        'aws_settings' => { 'k' => 'v' },
+        'dynamodb_tooling_jobs_table' => nil
+      }.to_json
+      assert_equal expected, config.to_json
+    end
+
+    def test_test_suffix
+      Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+      config = Config.new({
+                            'foo' => 'bar',
+                            'dynamodb_tooling_jobs_table' => 'tooling_jobs'
+                          }, {})
+
+      assert_equal 'tooling_jobs-test', config.dynamodb_tooling_jobs_table
+
+      expected = {
+        'foo' => 'bar',
+        'dynamodb_tooling_jobs_table' => 'tooling_jobs-test',
+        'aws_settings' => {}
       }.to_json
       assert_equal expected, config.to_json
     end
