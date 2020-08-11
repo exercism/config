@@ -14,11 +14,11 @@ module ExercismConfig
       require 'yaml'
 
       filename = if ENV["EXERCISM_CI"]
-                   'test-ci'
+                   'ci'
                  elsif ENV["EXERCISM_DOCKER"]
-                   'test-docker'
+                   'docker'
                  else
-                   'test-local'
+                   'local'
                  end
 
       settings_file = File.expand_path("../../../settings/#{filename}.yml", __FILE__)
@@ -34,13 +34,6 @@ module ExercismConfig
       items = resp.to_h[:items]
       data = items.each_with_object({}) do |item, h|
         h[item['id']] = item['value']
-      end
-
-      # Tweak things for dynamodb when we're running in test mode
-      if Exercism.env.test?
-        %w[dynamodb_tooling_jobs_table].each do |key|
-          data[key] = "#{data[key]}-test"
-        end
       end
 
       aws_settings = GenerateAwsSettings.()

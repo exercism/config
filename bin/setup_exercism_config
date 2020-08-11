@@ -5,8 +5,7 @@ require 'exercism-config'
 require 'erb'
 require 'yaml'
 
-env = ExercismConfig::DetermineEnvironment.call
-if env == :production
+if Exercism.env.production?
   puts 'Aborted! This script should not be run in production.'
   exit
 end
@@ -71,9 +70,9 @@ settings_file =
   elsif ENV['EXERCISM_DOCKER']
     File.expand_path('../settings/docker.yml', __dir__)
   elsif ENV['EXERCISM_CI']
-    File.expand_path('../settings/test-ci.yml', __dir__)
+    File.expand_path('../settings/ci.yml', __dir__)
   else
-    File.expand_path('../settings/development.yml', __dir__)
+    File.expand_path('../settings/local.yml', __dir__)
   end
 
 puts "Using settings file: #{settings_file}"
