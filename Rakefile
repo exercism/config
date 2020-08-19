@@ -10,5 +10,5 @@ end
 task default: :test
 
 task :lint do
-  sh 'bundle exec rubocop --except Metrics'
+  sh 'bundle exec rubocop --except Metrics -a'
 end
