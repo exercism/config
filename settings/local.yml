@@ -1,6 +1,7 @@
 anycable_redis_url: redis://127.0.0.1:6379/1
 anycable_rpc_host: 127.0.0.1:50051
 aws_iterations_bucket: exercism-staging-iterations
+aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
 dynamodb_tooling_jobs_table: tooling_jobs
 mysql_master_endpoint: localhost
 mysql_socket: /tmp/mysql.sock

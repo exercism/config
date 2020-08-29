@@ -1,6 +1,7 @@
 anycable_redis_url: redis://127.0.0.1:6379/1
 anycable_rpc_host: 127.0.0.1:50051
 aws_iterations_bucket: exercism-staging-iterations
+aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
 dynamodb_tooling_jobs_table: tooling_jobs
 spi_url: http://127.0.0.1:3020
 tooling_orchestrator_url: http://127.0.0.1:3021
