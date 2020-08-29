@@ -21,7 +21,7 @@ module ExercismConfig
     memoize
     def config_endpoint
       return nil if Exercism.env.production?
-      return "http://127.0.0.1:#{ENV['S3_PORT']}" if ENV['EXERCISM_CI']
+      return "http://127.0.0.1:#{ENV['S3_PORT']}" if Exercism.env.test? && ENV['EXERCISM_CI']
 
       host = ENV['EXERCISM_DOCKER'] ? 's3:9090' : 'localhost:3041'
       "http://#{host}"

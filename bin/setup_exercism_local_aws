@@ -13,9 +13,7 @@ Exercism.config.dynamodb_client = ExercismConfig::SetupDynamoDBClient.()
 # Setup local s3 #
 ##################
 
-# We don't need this running for CI atm as none of our
-# tests actually hit s3. Although we might choose to change this
-unless ENV["EXERCISM_CI"] || ENV["EXERCISM_SKIP_S3"]
+unless ENV["EXERCISM_SKIP_S3"]
   [
     Exercism.config.aws_iterations_bucket,
     Exercism.config.aws_tooling_jobs_bucket,
