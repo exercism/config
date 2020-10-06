@@ -19,7 +19,7 @@ unless ENV["EXERCISM_SKIP_S3"]
     Exercism.config.aws_tooling_jobs_bucket,
   ].each do |bucket|
     begin
-      ExercismConfig::SetupS3Client.().create_bucket(bucket: bucket)
+      Exercism.config.dynamodb_client.create_bucket(bucket: bucket)
     rescue Seahorse::Client::NetworkingError => e
       puts "local S3 not up yet..."
       sleep 2 # slighty retry delaty
@@ -88,6 +88,45 @@ end
           ],
           projection: { # required
             projection_type: "KEYS_ONLY"
+          },
+          provisioned_throughput: {
+            read_capacity_units: 1, # required
+            write_capacity_units: 1 # required
+          }
+        }
+      }
+    ]
+  )
+
+  Exercism.config.dynamodb_client.update_table(
+    table_name: table_name,
+    attribute_definitions: [
+      {
+        attribute_name: "submission_uuid",
+        attribute_type: "S"
+      },
+      {
+        attribute_name: "type",
+        attribute_type: "S"
+      }
+    ],
+    global_secondary_index_updates: [
+      {
+        create: {
+          index_name: "submission_type", # required
+          key_schema: [ # required
+            {
+              attribute_name: "submission_uuid", # required
+              key_type: "HASH" # required, accepts HASH, RANGE
+            },
+            {
+              attribute_name: "type", # required
+              key_type: "RANGE" # required, accepts HASH, RANGE
+            }
+          ],
+          projection: { # required
+            projection_type: "INCLUDE",
+            non_key_attributes: ["id", "job_status"]
           },
           provisioned_throughput: {
             read_capacity_units: 1, # required
