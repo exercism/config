@@ -19,7 +19,7 @@ unless ENV["EXERCISM_SKIP_S3"]
     Exercism.config.aws_tooling_jobs_bucket,
   ].each do |bucket|
     begin
-      Exercism.config.dynamodb_client.create_bucket(bucket: bucket)
+      ExercismConfig::SetupS3Client.().create_bucket(bucket: bucket)
     rescue Seahorse::Client::NetworkingError => e
       puts "local S3 not up yet..."
       sleep 2 # slighty retry delaty
