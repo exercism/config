@@ -28,10 +28,13 @@ unless ENV["EXERCISM_SKIP_S3"]
   end
 end
 
-########################
-# Setup local dynamodb #
-########################
-%w[tooling_jobs tooling_jobs-test].each do |table_name|
+###########################################
+# Setup local dynamodb tooling jobs table #
+###########################################
+[
+  Exercism.config.dynamodb_tooling_jobs_table,
+  Exercism.config.dynamodb_tooling_jobs_table + "-test"
+].each do |table_name|
   begin
     Exercism.config.dynamodb_client.delete_table(
       table_name: table_name
@@ -137,3 +140,40 @@ end
     ]
   )
 end
+
+##############################################
+# Setup local dynamodb language groups table #
+##############################################
+[
+  Exercism.config.dynamodb_tooling_language_groups_table,
+  Exercism.config.dynamodb_tooling_language_groups_table + "-test"
+].each do |table_name|
+  begin
+    Exercism.config.dynamodb_client.delete_table(
+      table_name: table_name
+    )
+  rescue Aws::DynamoDB::Errors::ResourceNotFoundException
+  end
+  puts "[x] #{table_name}"
+
+  Exercism.config.dynamodb_client.create_table(
+    table_name: table_name,
+    attribute_definitions: [
+      {
+        attribute_name: "group",
+        attribute_type: "S"
+      }
+    ],
+    key_schema: [
+      {
+        attribute_name: "group",
+        key_type: "HASH"
+      }
+    ],
+    provisioned_throughput: {
+      read_capacity_units: 1,
+      write_capacity_units: 1
+    }
+  )
+end
+

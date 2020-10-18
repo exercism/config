@@ -3,6 +3,7 @@ anycable_rpc_host: 0.0.0.0:50051
 aws_submissions_bucket: exercism-staging-submissions
 aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
 dynamodb_tooling_jobs_table: tooling_jobs
+dynamodb_tooling_language_groups_table: tooling_language_groups
 mysql_master_endpoint: mysql
 mysql_port: 3306
 spi_url: http://website:3020

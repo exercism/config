@@ -2,6 +2,7 @@ module Exercism
   class Config < OpenStruct
     PROPS_WITH_TEST_SUFFIX = %i[
       dynamodb_tooling_jobs_table
+      dynamodb_tooling_language_groups_table
     ].freeze
 
     def initialize(data, aws_settings)
