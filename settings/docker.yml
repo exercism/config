@@ -8,3 +8,4 @@ mysql_master_endpoint: mysql
 mysql_port: 3306
 spi_url: http://website:3020
 tooling_orchestrator_url: http://tooling-orchestrator:3021
+git_server_url: http://git-server:3021
