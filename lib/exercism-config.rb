@@ -10,7 +10,6 @@ require_relative 'exercism_config/setup_dynamodb_client'
 require_relative 'exercism_config/setup_ecr_client'
 require_relative 'exercism_config/setup_s3_client'
 require_relative 'exercism_config/retrieve'
-require_relative 'exercism_config/generate_aws_settings'
 require_relative 'exercism_config/version'
 
 require_relative 'exercism/config'
