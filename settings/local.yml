@@ -8,4 +8,4 @@ mysql_master_endpoint: localhost
 mysql_socket: /tmp/mysql.sock
 spi_url: http://127.0.0.1:3020
 tooling_orchestrator_url: http://127.0.0.1:3021
-git_server_url: http://127.0.0.1:3022
+language_server_url: ws://127.0.0.1:3023

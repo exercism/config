@@ -6,7 +6,7 @@ dynamodb_tooling_jobs_table: tooling_jobs
 dynamodb_tooling_language_groups_table: tooling_language_groups
 spi_url: http://127.0.0.1:3020
 tooling_orchestrator_url: http://127.0.0.1:3021
-git_server_url: http://127.0.0.1:3022
+language_server_url: ws://127.0.0.1:3023
 
 mysql_master_endpoint: 127.0.0.1
 mysql_port: <%= ENV["MYSQL_PORT"] %>
