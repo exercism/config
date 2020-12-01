@@ -1,5 +1,5 @@
 module ExercismConfig
-  class Retrieve
+  class RetrieveConfig
     include Mandate
 
     def call
@@ -13,15 +13,7 @@ module ExercismConfig
       require 'erb'
       require 'yaml'
 
-      filename = if ENV["EXERCISM_CI"]
-                   'ci'
-                 elsif ENV["EXERCISM_DOCKER"]
-                   'docker'
-                 else
-                   'local'
-                 end
-
-      settings_file = File.expand_path("../../../settings/#{filename}.yml", __FILE__)
+      settings_file = File.expand_path("../../../settings/#{settings_filename}.yml", __FILE__)
       settings = YAML.safe_load(ERB.new(File.read(settings_file)).result)
 
       Exercism::Config.new(settings, {})
@@ -41,5 +33,16 @@ module ExercismConfig
     rescue StandardError => e
       raise Exercism::ConfigError, "Exercism Config could not be loaded: #{e.message}"
     end
+
+    def settings_filename
+      if ENV["EXERCISM_CI"]
+        'ci'
+      elsif ENV["EXERCISM_DOCKER"]
+        'docker'
+      else
+        'local'
+      end
+    end
+
   end
 end

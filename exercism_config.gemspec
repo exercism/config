@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'aws-sdk-dynamodb', '~> 1.0'
+  spec.add_dependency 'aws-sdk-secretsmanager', '~> 1.0'
   spec.add_dependency 'mandate'
   spec.add_dependency 'zeitwerk'
 
@@ -36,6 +37,7 @@ Gem::Specification.new do |spec|
 
   # This isn't a compulsary dependency
   # but can be used if someone puts it in their
-  # own gemfile
+  # own Gemfile when using this.
   spec.add_development_dependency 'aws-sdk-s3'
+  spec.add_development_dependency 'aws-sdk-ecr'
 end

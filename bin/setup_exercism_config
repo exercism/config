@@ -10,8 +10,8 @@ if Exercism.env.production?
   exit
 end
 
-def create_table(client)
-  client.create_table(
+def create_dynamodb_table
+  Exercism.dynamodb_client.create_table(
     table_name: :config,
     attribute_definitions: [
       {
@@ -33,13 +33,13 @@ def create_table(client)
 end
 
 def delete_table(client)
-  client.delete_table(
+  Exercism.dynamodb_client.delete_table(
     table_name: :config
   )
 end
 
-def set_config_value(client, id, value)
-  client.put_item(
+def set_config_value(id, value)
+  Exercism.dynamodb_client.put_item(
     table_name: :config,
     item: {
       id: id,
@@ -48,15 +48,13 @@ def set_config_value(client, id, value)
   )
 end
 
-client = Exercism.dynamodb_client
-
 begin
-  create_table(client)
+  create_dynamodb_table
 rescue Aws::DynamoDB::Errors::ResourceInUseException => e
   if ARGV.include?('--force')
     puts 'Table exists. Recreating...'
-    delete_table(client)
-    create_table(client)
+    delete_table
+    create_dynamodb_table
     puts 'Table recreated.'
   else
     puts 'Table exists. Not recreating.'
@@ -79,5 +77,16 @@ puts "Using settings file: #{settings_file}"
 settings = YAML.load(ERB.new(File.read(settings_file)).result)
 
 settings.each do |key, value|
-  set_config_value(client, key, value)
+  set_config_value(key, value)
 end
+
+secrets_file = File.expand_path('../settings/secrets.yml', __dir__)
+puts "Using secrets file: #{secrets_file}"
+secrets_json = YAML.load(ERB.new(File.read(secrets_file)).result).to_json
+
+secrets_client = Aws::SecretsManager::Client.new(ExercismConfig::GenerateAwsSettings.())
+secrets_client.create_secret(
+  description: "Exercism Config used secrets", 
+  name: "config", 
+  secret_string: secrets_json
+)
