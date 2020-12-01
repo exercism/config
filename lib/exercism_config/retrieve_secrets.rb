@@ -16,7 +16,7 @@ module ExercismConfig
       settings_file = File.expand_path('../../settings/secrets.yml', __dir__)
       settings = YAML.safe_load(ERB.new(File.read(settings_file)).result)
 
-      Exercism::Settings.new(settings, {})
+      Exercism::Secrets.new(settings, {})
     end
 
     def retrieve_from_aws
