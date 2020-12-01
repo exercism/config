@@ -4,13 +4,13 @@ class RetrieveTest < Minitest::Test
   def test_config_is_set
     Aws::DynamoDB::Client.expects(:new).returns(client)
 
-    assert ExercismConfig::Retrieve.()
+    assert ExercismConfig::RetrieveConfig.()
   end
 
   def test_config_sets_if_lookup_fails
     assert_raises Exercism::ConfigError do
       Aws::DynamoDB::Client.expects(:new).raises(RuntimeError)
-      ExercismConfig::Retrieve.()
+      ExercismConfig::RetrieveConfig.()
     end
   end
 
@@ -21,7 +21,7 @@ class RetrieveTest < Minitest::Test
       region: 'eu-west-2'
     ).returns(client)
 
-    assert ExercismConfig::Retrieve.()
+    assert ExercismConfig::RetrieveConfig.()
   end
 
   def test_config_for_development
@@ -34,7 +34,7 @@ class RetrieveTest < Minitest::Test
       secret_access_key: 'FAKE'
     ).returns(client)
 
-    assert ExercismConfig::Retrieve.()
+    assert ExercismConfig::RetrieveConfig.()
   end
 
   def client

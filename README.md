@@ -5,6 +5,34 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/513edbd6599a2de3218d/test_coverage)](https://codeclimate.com/github/exercism/config/test_coverage)
 [![Gem Version](https://badge.fury.io/rb/exercism-config.svg)](https://badge.fury.io/rb/exercism-config)
 
+## Usage
+
+This gem provides you with the following config and secrets:
+
+```ruby
+# Config
+
+Exercism.config.anycable_redis_url
+Exercism.config.anycable_rpc_host
+Exercism.config.aws_submissions_bucket
+Exercism.config.aws_tooling_jobs_bucket
+Exercism.config.dynamodb_tooling_jobs_table
+Exercism.config.dynamodb_tooling_language_groups_table
+Exercism.config.mysql_master_endpoint
+Exercism.config.mysql_port
+Exercism.config.spi_url
+Exercism.config.tooling_orchestrator_url
+Exercism.config.language_server_url
+
+# Secrets
+Exercism.secrets.github_omniauth_app_id
+Exercism.secrets.github_omniauth_app_secret
+Exercism.secrets.hcaptcha_site_key
+Exercism.secrets.hcaptcha_secret
+```
+
+## Explaination
+
 When terraform creates Exercism's infrastructure, it writes endpoints and DNS entries to DynamoDB.
 This gem allows you to trivially retrieve that data.
 
