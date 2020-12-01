@@ -32,7 +32,7 @@ def create_dynamodb_table
   )
 end
 
-def delete_table(client)
+def delete_table
   Exercism.dynamodb_client.delete_table(
     table_name: :config
   )
@@ -84,9 +84,17 @@ secrets_file = File.expand_path('../settings/secrets.yml', __dir__)
 puts "Using secrets file: #{secrets_file}"
 secrets_json = YAML.load(ERB.new(File.read(secrets_file)).result).to_json
 
+secret_name = "config"
 secrets_client = Aws::SecretsManager::Client.new(ExercismConfig::GenerateAwsSettings.())
-secrets_client.create_secret(
-  description: "Exercism Config used secrets", 
-  name: "config", 
-  secret_string: secrets_json
-)
+begin
+  secrets_client.create_secret(
+    description: "Exercism Config used secrets", 
+    name: secret_name, 
+    secret_string: secrets_json
+  )
+rescue Aws::SecretsManager::Errors::ResourceExistsException
+  secrets_client.update_secret(
+    secret_id: secret_name, 
+    secret_string: secrets_json
+  )
+end
