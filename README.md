@@ -7,7 +7,7 @@
 
 ## Usage
 
-This gem provides you with the following config and secrets:
+This gem provides you with the following config, secrets and helper methods:
 
 ```ruby
 # Config
@@ -29,6 +29,11 @@ Exercism.secrets.github_omniauth_app_id
 Exercism.secrets.github_omniauth_app_secret
 Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
+
+# Helper methods (create new clients)
+Exercism.dynamodb_client
+Exercism.s3_client
+Exercism.ecr_client
 ```
 
 ## Explaination
