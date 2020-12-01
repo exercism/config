@@ -12,9 +12,9 @@ jobs:
 
     services:
       dynamodb:
-        image: "amazon/dynamodb-local"
+        image: "localstack/localstack"
         ports:
-          - 8000
+          - 4566
 
     steps:
       ###
@@ -24,19 +24,10 @@ jobs:
       ###
       # Setup Ruby - this needs to match the version in the Gemfile
       - name: Set up Ruby
-        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        uses: ruby/setup-ruby@a699edbce608a2c128dedad88e3b6a0e28687b3c
         with:
           ruby-version: 2.6.6
-
-      ###
-      # Caching using GitHub's caching action
-      - name: Cache Bundler
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          bundler-cache: true
 
       ###
       # Install bundler and yarn dependencies
@@ -44,10 +35,8 @@ jobs:
         env:
           EXERCISM_ENV: test
           EXERCISM_CI: true
-          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['8000'] }}
+          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['4566'] }}
         run: |
-          bundle config path vendor/bundle # This is needed for the caching above
-          bundle install --jobs 4 --retry 3
           bundle exec setup_exercism_config
 
       ###
@@ -64,7 +53,7 @@ jobs:
         env:
           EXERCISM_ENV: test
           EXERCISM_CI: true
-          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['8000'] }}
+          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['4566'] }}
           CAPTURE_CODE_COVERAGE: true
         run: |
           bundle exec rake test

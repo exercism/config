@@ -9,7 +9,17 @@ When terraform creates Exercism's infrastructure, it writes endpoints and DNS en
 This gem allows you to trivially retrieve that data.
 
 When running on AWS, simply ensure the machine has read-access to the relevant table (currently hardcoded to `config`).
-On a local machine specify the AWS_PROFILE environment variable with the relevant profile stored in your `.aws/credentials`.
+
+## Local AWS
+
+This requires a local version of AWS to work.
+We use localstack for this.
+If you use the development-environment this will be handled for you.
+If not, to start localstack use the following:
+
+```bash
+docker run -dp 3042:8080 -p 3040:4566 -p 3041:4566 localstack/localstack
+```
 
 ## Usage
 
