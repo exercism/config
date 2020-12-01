@@ -5,7 +5,7 @@ module ExercismConfig
     def call
       {
         region: 'eu-west-2',
-        profile: profile,
+        endpoint: endpoint,
         access_key_id: aws_access_key_id,
         secret_access_key: aws_secret_access_key
       }.select { |_k, v| v }
@@ -22,8 +22,12 @@ module ExercismConfig
     end
 
     memoize
-    def profile
-      Exercism.env.production? ? nil : 'exercism_staging'
+    def endpoint
+      return nil if Exercism.env.production?
+      return "http://127.0.0.1:#{ENV['AWS_PORT']}" if Exercism.env.test? && ENV['EXERCISM_CI']
+
+      host = ENV['EXERCISM_DOCKER'] ? 'aws:3040' : 'localhost:3040'
+      "http://#{host}"
     end
   end
 end
