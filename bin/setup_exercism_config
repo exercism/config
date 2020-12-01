@@ -48,7 +48,7 @@ def set_config_value(client, id, value)
   )
 end
 
-client = ExercismConfig::SetupDynamoDBClient.call
+client = Exercism.dynamodb_client
 
 begin
   create_table(client)

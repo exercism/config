@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      dynamodb:
+      aws:
         image: "localstack/localstack"
         ports:
           - 4566
@@ -35,7 +35,7 @@ jobs:
         env:
           EXERCISM_ENV: test
           EXERCISM_CI: true
-          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['4566'] }}
+          AWS_PORT: ${{ job.services.aws.ports['4566'] }}
         run: |
           bundle exec setup_exercism_config
 
@@ -53,7 +53,7 @@ jobs:
         env:
           EXERCISM_ENV: test
           EXERCISM_CI: true
-          DYNAMODB_PORT: ${{ job.services.dynamodb.ports['4566'] }}
+          AWS_PORT: ${{ job.services.aws.ports['4566'] }}
           CAPTURE_CODE_COVERAGE: true
         run: |
           bundle exec rake test

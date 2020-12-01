@@ -10,8 +10,8 @@ require_relative 'exercism_config/setup_dynamodb_client'
 require_relative 'exercism_config/setup_ecr_client'
 require_relative 'exercism_config/setup_s3_client'
 require_relative 'exercism_config/retrieve'
-require_relative 'exercism_config/version'
 
+require_relative 'exercism_config/version'
 require_relative 'exercism/config'
 
 module Exercism
@@ -21,12 +21,19 @@ module Exercism
     @env ||= ExercismConfig::DetermineEnvironment.()
   end
 
-  def self.environment
-    puts "Exercism.environment is deprecated. Use Exercism.env"
-    env
-  end
-
   def self.config
     @config ||= ExercismConfig::Retrieve.()
+  end
+
+  def self.dynamodb_client
+    Aws::DynamoDB::Client.new(ExercismConfig::GenerateAwsSettings.())
+  end
+
+  def self.s3_client
+    Aws::S3::Client.new(
+      ExercismConfig::GenerateAwsSettings.().merge(
+        force_path_style: true
+      )
+    )
   end
 end

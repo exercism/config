@@ -28,9 +28,7 @@ module ExercismConfig
     end
 
     def retrieve_from_dynamodb
-      client = SetupDynamoDBClient.()
-
-      resp = client.scan({ table_name: 'config' })
+      resp = Exercism.dynamodb_client.scan({ table_name: 'config' })
       items = resp.to_h[:items]
       data = items.each_with_object({}) do |item, h|
         h[item['id']] = item['value']
@@ -42,19 +40,6 @@ module ExercismConfig
       raise
     rescue StandardError => e
       raise Exercism::ConfigError, "Exercism Config could not be loaded: #{e.message}"
-    end
-
-    memoize
-    def aws_client
-      config = {
-        region: 'eu-west-2',
-        profile: profile,
-        endpoint: endpoint,
-        access_key_id: aws_access_key_id,
-        secret_access_key: aws_secret_access_key
-      }.select { |_k, v| v }
-
-      Aws::DynamoDB::Client.new(config)
     end
   end
 end
