@@ -38,6 +38,6 @@ Gem::Specification.new do |spec|
   # This isn't a compulsary dependency
   # but can be used if someone puts it in their
   # own Gemfile when using this.
-  spec.add_development_dependency 'aws-sdk-s3'
   spec.add_development_dependency 'aws-sdk-ecr'
+  spec.add_development_dependency 'aws-sdk-s3'
 end

@@ -43,6 +43,5 @@ module ExercismConfig
         'local'
       end
     end
-
   end
 end
