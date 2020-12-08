@@ -27,6 +27,7 @@ Exercism.config.language_server_url
 # Secrets
 Exercism.secrets.github_omniauth_app_id
 Exercism.secrets.github_omniauth_app_secret
+Exercism.secrets.github_webhooks_secret
 Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
 
