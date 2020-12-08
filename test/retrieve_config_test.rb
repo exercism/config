@@ -1,4 +1,6 @@
 require 'test_helper'
+require 'erb'
+require 'yaml'
 
 class RetrieveTest < Minitest::Test
   def test_config_is_set
@@ -24,17 +26,28 @@ class RetrieveTest < Minitest::Test
     assert ExercismConfig::RetrieveConfig.()
   end
 
+  # This can depend on the situation that the test is
+  # being executed within
   def test_config_for_development
     Exercism.stubs(env: ExercismConfig::Environment.new(:development))
+    config = ExercismConfig::RetrieveConfig.()
+    assert_includes %w[
+      mysql
+      localhost
+      127.0.0.1
+    ], config.mysql_master_endpoint
+  end
 
-    Aws::DynamoDB::Client.expects(:new).with(
-      region: 'eu-west-2',
-      endpoint: 'http://localhost:3040',
-      access_key_id: 'FAKE',
-      secret_access_key: 'FAKE'
-    ).returns(client)
-
-    assert ExercismConfig::RetrieveConfig.()
+  # This can depend on the situation that the test is
+  # being executed within
+  def test_config_for_test
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+    config = ExercismConfig::RetrieveConfig.()
+    assert_includes %w[
+      mysql
+      localhost
+      127.0.0.1
+    ], config.mysql_master_endpoint
   end
 
   def client

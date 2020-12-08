@@ -3,13 +3,13 @@ module ExercismConfig
     include Mandate
 
     def call
-      return generate_mock if Exercism.env.test?
+      return use_non_production_settings unless Exercism.env.production?
 
       retrieve_from_dynamodb
     end
 
     private
-    def generate_mock
+    def use_non_production_settings
       require 'erb'
       require 'yaml'
 
@@ -43,6 +43,5 @@ module ExercismConfig
         'local'
       end
     end
-
   end
 end

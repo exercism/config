@@ -3,13 +3,13 @@ module ExercismConfig
     include Mandate
 
     def call
-      return generate_mock if Exercism.env.test?
+      return use_non_production_settings unless Exercism.env.production?
 
       retrieve_from_aws
     end
 
     private
-    def generate_mock
+    def use_non_production_settings
       require 'erb'
       require 'yaml'
 
