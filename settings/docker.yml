@@ -1,11 +1,23 @@
+# Anycable
 anycable_redis_url: redis://redis:6379/1
 anycable_rpc_host: 0.0.0.0:50051
-aws_submissions_bucket: exercism-staging-submissions
-aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
+
+# DynamoDB config
 dynamodb_tooling_jobs_table: tooling_jobs
 dynamodb_tooling_language_groups_table: tooling_language_groups
-mysql_master_endpoint: mysql
-mysql_port: 3306
+
+# Internal Routes
 spi_url: http://website:3020
 tooling_orchestrator_url: http://tooling-orchestrator:3021
 language_server_url: ws://localhost:3023
+
+# MySQL
+mysql_master_endpoint: mysql
+mysql_port: 3306
+
+# S3 Config
+aws_submissions_bucket: exercism-staging-submissions
+aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
+
+# Sidekiq Config
+sidekiq_redis_url: redis://redis:6379/2
