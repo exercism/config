@@ -10,6 +10,19 @@ module Exercism
       self.aws_settings = aws_settings
     end
 
+    def method_missing(*args)
+      super.tap do |val|
+        raise NoMethodError if val.nil? || val == ""
+      end
+    end
+
+    def respond_to_missing?(*args)
+      super
+      true
+    rescue NoMethodError
+      false
+    end
+
     PROPS_WITH_TEST_SUFFIX.each do |prop|
       define_method prop do
         Exercism.env.test? ? "#{super()}-test" : super()
@@ -20,6 +33,8 @@ module Exercism
       hash = to_h
       PROPS_WITH_TEST_SUFFIX.each do |prop|
         hash[prop] = send(prop)
+      rescue NoMethodError
+        # We don't want to show nil or empty string values in the JSON output
       end
       hash.to_json
     end

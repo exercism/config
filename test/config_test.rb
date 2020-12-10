@@ -7,13 +7,21 @@ module Exercism
       assert_equal 'bar', config.foo
     end
 
+    def test_raises_for_missing_value
+      config = Config.new({ 'foo' => '' }, {})
+      assert_raises NoMethodError do
+        config.foo # Empty String
+      end
+      assert_raises NoMethodError do
+        config.bar # Nil
+      end
+    end
+
     def test_to_json
       config = Config.new({ 'foo' => 'bar' }, { k: 'v' })
       expected = {
         'foo' => 'bar',
-        'aws_settings' => { 'k' => 'v' },
-        'dynamodb_tooling_jobs_table' => nil,
-        'dynamodb_tooling_language_groups_table' => nil
+        'aws_settings' => { 'k' => 'v' }
       }.to_json
       assert_equal expected, config.to_json
     end
