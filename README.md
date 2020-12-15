@@ -25,6 +25,7 @@ Exercism.config.tooling_orchestrator_url
 Exercism.config.language_server_url
 
 # Secrets
+Exercism.secrets.github_access_token
 Exercism.secrets.github_omniauth_app_id
 Exercism.secrets.github_omniauth_app_secret
 Exercism.secrets.github_webhooks_secret
