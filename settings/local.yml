@@ -7,13 +7,14 @@ dynamodb_tooling_jobs_table: tooling_jobs
 dynamodb_tooling_language_groups_table: tooling_language_groups
 
 # Internal Routes
-language_server_url: ws://localhost:3023
-spi_url: http://localhost:3020
-tooling_orchestrator_url: http://localhost:3021
+language_server_url: ws://local.exercism.io:3023
+spi_url: http://local.exercism.io:3020
+tooling_orchestrator_url: http://local.exercism.io:3021
 
 # MySQL
 mysql_master_endpoint: localhost
 mysql_socket: /tmp/mysql.sock
+mysql_port: nil
 
 # S3 Config
 aws_submissions_bucket: exercism-staging-submissions

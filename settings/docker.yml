@@ -9,7 +9,7 @@ dynamodb_tooling_language_groups_table: tooling_language_groups
 # Internal Routes
 spi_url: http://website:3020
 tooling_orchestrator_url: http://tooling-orchestrator:3021
-language_server_url: ws://localhost:3023
+language_server_url: ws://local.exercism.io:3023
 
 # MySQL
 mysql_master_endpoint: mysql
