@@ -10,9 +10,12 @@ module Exercism
       self.aws_settings = aws_settings
     end
 
-    def method_missing(*args)
+    def method_missing(name, *args)
       super.tap do |val|
-        raise NoMethodError if val.nil? || val == ""
+        next unless val.nil?
+
+        keys = to_h.keys
+        raise NoMethodError unless keys.include?(name.to_s) || keys.include?(name.to_sym)
       end
     end
 

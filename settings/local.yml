@@ -14,7 +14,7 @@ tooling_orchestrator_url: http://local.exercism.io:3021
 # MySQL
 mysql_master_endpoint: localhost
 mysql_socket: /tmp/mysql.sock
-mysql_port: nil
+mysql_port: null
 
 # S3 Config
 aws_submissions_bucket: exercism-staging-submissions

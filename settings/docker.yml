@@ -13,6 +13,7 @@ language_server_url: ws://local.exercism.io:3023
 
 # MySQL
 mysql_master_endpoint: mysql
+mysql_socket: null
 mysql_port: 3306
 
 # S3 Config

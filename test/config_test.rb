@@ -8,12 +8,20 @@ module Exercism
     end
 
     def test_raises_for_missing_value
-      config = Config.new({ 'foo' => '' }, {})
+      config = Config.new({
+                            'str_str' => '',
+                            'str_nil' => nil,
+                            sym_str: '',
+                            sym_nil: nil
+                          }, {})
+      assert_equal "", config.str_str
+      assert_nil config.str_nil
+
+      assert_equal "", config.sym_str
+      assert_nil config.sym_nil
+
       assert_raises NoMethodError do
-        config.foo # Empty String
-      end
-      assert_raises NoMethodError do
-        config.bar # Nil
+        config.random_missing_thing # Nil
       end
     end
 
