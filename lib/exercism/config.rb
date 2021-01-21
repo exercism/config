@@ -15,7 +15,7 @@ module Exercism
         next unless val.nil?
 
         keys = to_h.keys
-        raise NoMethodError unless keys.include?(name.to_s) || keys.include?(name.to_sym)
+        raise NoMethodError, name unless keys.include?(name.to_s) || keys.include?(name.to_sym)
       end
     end
 

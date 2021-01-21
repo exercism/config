@@ -22,3 +22,7 @@ aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
 
 # Sidekiq Config
 sidekiq_redis_url: redis://redis:6379/2
+
+# EFS Config
+efs_submissions_mount_point: "/tmp/exercism/efs/submissions"
+efs_repositories_mount_point: "/tmp/exercism/efs/repos"
