@@ -1,5 +1,6 @@
 require 'aws-sdk-dynamodb'
 require 'aws-sdk-secretsmanager'
+require 'octokit'
 require 'mandate'
 require 'ostruct'
 require 'json'
@@ -48,5 +49,11 @@ module Exercism
   def self.ecr_client
     require 'aws-sdk-ecr'
     Aws::ECR::Client.new(ExercismConfig::GenerateAwsSettings.())
+  end
+
+  def self.octokit_client
+    @octokit_client ||= Octokit::Client.new(access_token: ENV.fetch("GITHUB_TOKEN", self.secrets.github_access_token)).tap do |c|
+      c.auto_paginate = true
+    end
   end
 end

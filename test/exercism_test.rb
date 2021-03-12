@@ -14,4 +14,9 @@ class ExercismTest < Minitest::Test
     ecr_client = Exercism.ecr_client
     assert_equal "eu-west-2", ecr_client.config.region
   end
+
+  def test_octokit_client
+    octokit_client = Exercism.octokit_client
+    assert octokit_client.auto_paginate
+  end
 end
