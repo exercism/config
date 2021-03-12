@@ -1,6 +1,5 @@
 require 'aws-sdk-dynamodb'
 require 'aws-sdk-secretsmanager'
-require 'octokit'
 require 'mandate'
 require 'ostruct'
 require 'json'
