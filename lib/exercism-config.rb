@@ -49,4 +49,19 @@ module Exercism
     require 'aws-sdk-ecr'
     Aws::ECR::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
+
+  def self.octokit_client
+    require 'octokit'
+
+    access_token = ENV.fetch(
+      "GITHUB_ACCESS_TOKEN",
+      self.secrets.github_access_token
+    )
+
+    @octokit_client ||= Octokit::Client.new(
+      access_token: access_token
+    ).tap do |c|
+      c.auto_paginate = true
+    end
+  end
 end

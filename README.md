@@ -36,9 +36,10 @@ Exercism.secrets.hcaptcha_secret
 Exercism.dynamodb_client
 Exercism.s3_client
 Exercism.ecr_client
+Exercism.octokit_client
 ```
 
-## Explaination
+## Explanation
 
 When terraform creates Exercism's infrastructure, it writes endpoints and DNS entries to DynamoDB.
 This gem allows you to trivially retrieve that data.
