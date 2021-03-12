@@ -16,6 +16,8 @@ class ExercismTest < Minitest::Test
   end
 
   def test_octokit_client
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
     octokit_client = Exercism.octokit_client
     assert octokit_client.auto_paginate
   end
