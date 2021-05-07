@@ -8,12 +8,14 @@ module Exercism
     end
 
     def test_raises_for_missing_value
-      config = Config.new({
-                            'str_str' => '',
-                            'str_nil' => nil,
-                            sym_str: '',
-                            sym_nil: nil
-                          }, {})
+      config = Config.new(
+        {
+          'str_str' => '',
+          'str_nil' => nil,
+          sym_str: '',
+          sym_nil: nil
+        }, {}
+      )
       assert_equal "", config.str_str
       assert_nil config.str_nil
 

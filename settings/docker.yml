@@ -20,6 +20,9 @@ mysql_port: 3306
 aws_submissions_bucket: exercism-staging-submissions
 aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
 
+# Hosts
+website_icons_host: https://exercism-icons-staging.s3.eu-west-2.amazonaws.com
+
 # Sidekiq Config
 sidekiq_redis_url: redis://redis:6379/2
 
