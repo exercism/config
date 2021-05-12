@@ -40,4 +40,5 @@ Gem::Specification.new do |spec|
   # own Gemfile when using this.
   spec.add_development_dependency 'aws-sdk-ecr'
   spec.add_development_dependency 'aws-sdk-s3'
+  spec.add_development_dependency 'redis'
 end
