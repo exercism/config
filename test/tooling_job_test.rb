@@ -12,7 +12,7 @@ module Exercism
       redis.del(*keys) unless keys.empty?
     end
 
-    def test_retrieves_metadata_from_s3
+    def test_retrieves_metadata_from_s3 # rubocop:disable Naming/VariableNumber
       job_id = SecureRandom.uuid
       stdout = "Some output"
       stderr = "Some errors"
