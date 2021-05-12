@@ -31,22 +31,22 @@ module Exercism
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
 
-      id = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
-      ToolingJob.find(id).cancelled!
+      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job.cancelled!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
-      assert_equal id, redis.lindex(ToolingJob.key_for_cancelled, 0)
+      assert_equal job.id, redis.lindex(ToolingJob.key_for_cancelled, 0)
     end
 
     def test_locks_job
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
 
-      id = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
-      ToolingJob.find(id).locked!
+      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job.locked!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
-      assert_equal id, redis.lindex(ToolingJob.key_for_locked, 0)
+      assert_equal job.id, redis.lindex(ToolingJob.key_for_locked, 0)
     end
 
     def test_marks_job_as_executed
@@ -55,31 +55,32 @@ module Exercism
       status = "foobar"
       output = "say what now"
 
-      id = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
-      ToolingJob.find(id).locked!
-      ToolingJob.find(id).executed!(status, output)
+      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job.locked!
+      job.executed!(status, output)
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
       assert_nil redis.lindex(ToolingJob.key_for_locked, 0)
-      assert_equal id, redis.lindex(ToolingJob.key_for_executed, 0)
+      assert_equal job.id, redis.lindex(ToolingJob.key_for_executed, 0)
 
-      assert_equal status, ToolingJob.find(id).execution_status
-      assert_equal output, ToolingJob.find(id).execution_output
+      job = ToolingJob.find(job.id)
+      assert_equal status, job.execution_status
+      assert_equal output, job.execution_output
     end
 
     def test_marks_job_as_processed
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
 
-      id = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
-      ToolingJob.find(id).locked!
-      ToolingJob.find(id).executed!(nil, nil)
-      ToolingJob.find(id).processed!
+      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job.locked!
+      job.executed!(nil, nil)
+      job.processed!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
       assert_nil redis.lindex(ToolingJob.key_for_locked, 0)
       assert_nil redis.lindex(ToolingJob.key_for_executed, 0)
-      assert_equal id, redis.lindex(ToolingJob.key_for_processed, 0)
+      assert_equal job.id, redis.lindex(ToolingJob.key_for_processed, 0)
     end
   end
 end

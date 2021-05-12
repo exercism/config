@@ -5,25 +5,27 @@ module Exercism
 
     extend Mandate::Memoize
 
-    def self.create!(type, submission_uuid, language, exercise, attributes = {})
+    def self.create!(type, submission_uuid, language, exercise, extra = {})
       job_id = SecureRandom.uuid.tr('-', '')
+      data = extra.merge(
+        id: job_id,
+        submission_uuid: submission_uuid,
+        type: type,
+        language: language,
+        exercise: exercise,
+        created_at: Time.now.utc.to_i
+      )
+
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.set(
           "job:#{job_id}",
-          attributes.merge(
-            id: job_id,
-            submission_uuid: submission_uuid,
-            type: type,
-            language: language,
-            exercise: exercise,
-            created_at: Time.now.utc.to_i
-          ).to_json
+          data.to_json
         )
         redis.rpush(key_for_queued, job_id)
         redis.set("submission:#{submission_uuid}:#{type}", job_id)
       end
-      job_id
+      new(job_id, data)
     end
 
     def self.find(id)
@@ -38,7 +40,7 @@ module Exercism
       new(job_id, JSON.parse(json))
     end
 
-    attr_reader :id, :data
+    attr_reader :id
 
     def initialize(id, data)
       @id = id
@@ -113,6 +115,8 @@ module Exercism
     end
 
     private
+    attr_reader :data
+
     def read_s3_file(name)
       Exercism.s3_client.get_object(
         bucket: s3_bucket_name,
