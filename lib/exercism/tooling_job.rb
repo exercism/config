@@ -44,21 +44,21 @@ module Exercism
 
     def initialize(id, data)
       @id = id
-      @data = data.freeze
+      @data = data.transform_keys(&:to_sym).freeze
     end
 
     def to_h
       data.to_h
     end
 
-    def respond_to_missing?(meth)
-      data.key?(meth.to_s) || super
+    def respond_to_missing?(meth, include_all = true)
+      data.key?(meth) || super
     end
 
     def method_missing(meth)
       super unless respond_to_missing?(meth)
 
-      data[meth.to_s]
+      data[meth]
     end
 
     def locked!

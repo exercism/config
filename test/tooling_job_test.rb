@@ -12,6 +12,16 @@ module Exercism
       redis.del(*keys) unless keys.empty?
     end
 
+    def test_methods
+      # Symbols
+      job = ToolingJob.new(1, foo: 'bar-1')
+      assert_equal 'bar-1', job.foo
+
+      # Strings
+      job = ToolingJob.new(2, 'foo' => 'bar-2')
+      assert_equal 'bar-2', job.foo
+    end
+
     def test_retrieves_metadata_from_s3 # rubocop:disable Naming/VariableNumber
       job_id = SecureRandom.uuid
       stdout = "Some output"
