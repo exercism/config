@@ -3,7 +3,7 @@ anycable_redis_url: redis://127.0.0.1:6379/1
 anycable_rpc_host: 127.0.0.1:50051
 
 # Tooling
-tooling_redis_url: redis://127.0.0.1:6379/2
+tooling_redis_url: redis://127.0.0.1:6379/3
 
 # DynamoDB config
 dynamodb_tooling_jobs_table: tooling_jobs
