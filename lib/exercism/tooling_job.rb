@@ -69,7 +69,7 @@ module Exercism
       end
     end
 
-    def executed!(status, output)
+    def executed!(status, output, exception)
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.lrem(key_for_queued, 1, id)
@@ -80,7 +80,8 @@ module Exercism
           "job:#{id}",
           data.merge(
             execution_status: status,
-            execution_output: output
+            execution_output: output,
+            execution_exception: exception
           ).to_json
         )
       end
