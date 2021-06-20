@@ -64,10 +64,11 @@ module Exercism
       submission_uuid = SecureRandom.uuid
       status = "foobar"
       output = "say what now"
+      exception = { 'oh' => 'no' }
 
       job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
       job.locked!
-      job.executed!(status, output)
+      job.executed!(status, output, exception)
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
       assert_nil redis.lindex(ToolingJob.key_for_locked, 0)
@@ -76,6 +77,7 @@ module Exercism
       job = ToolingJob.find(job.id)
       assert_equal status, job.execution_status
       assert_equal output, job.execution_output
+      assert_equal exception, job.execution_exception
     end
 
     def test_marks_job_as_processed
@@ -84,7 +86,7 @@ module Exercism
 
       job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
       job.locked!
-      job.executed!(nil, nil)
+      job.executed!(nil, nil, nil)
       job.processed!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
