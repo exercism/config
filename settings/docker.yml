@@ -33,6 +33,9 @@ sidekiq_redis_url: redis://redis:6379/2
 efs_submissions_mount_point: "/tmp/exercism/efs/submissions"
 efs_repositories_mount_point: "/tmp/exercism/efs/repos"
 
+# GitHub Config
+github_organization: fake-exercism
+
 # Extra things not used in development, but here
 # so that this file can provide a reference
 website_assets_host:
