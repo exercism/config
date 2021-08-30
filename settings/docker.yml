@@ -20,11 +20,11 @@ mysql_socket: null
 mysql_port: 3306
 
 # S3 Config
-aws_submissions_bucket: exercism-staging-submissions
-aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
+aws_submissions_bucket: exercism-v3-submissions
+aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 
 # Hosts
-website_icons_host: https://exercism-icons-staging.s3.eu-west-2.amazonaws.com
+website_icons_host: https://exercism-v3-icons.s3.eu-west-2.amazonaws.com
 
 # Sidekiq Config
 sidekiq_redis_url: redis://redis:6379/2
