@@ -10,9 +10,9 @@ dynamodb_tooling_jobs_table: tooling_jobs
 dynamodb_tooling_language_groups_table: tooling_language_groups
 
 # Internal Routes
-language_server_url: ws://local.exercism.io:3023
-spi_url: http://local.exercism.io:3020
-tooling_orchestrator_url: http://local.exercism.io:3021
+language_server_url: ws://local.exercism.org:3023
+spi_url: http://local.exercism.org:3020
+tooling_orchestrator_url: http://local.exercism.org:3021
 
 # MySQL
 mysql_master_endpoint: localhost
@@ -20,11 +20,11 @@ mysql_socket: /tmp/mysql.sock
 mysql_port: null
 
 # S3 Config
-aws_submissions_bucket: exercism-staging-submissions
-aws_tooling_jobs_bucket: exercism-staging-tooling-jobs
+aws_submissions_bucket: exercism-v3-submissions
+aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 
 # Hosts
-website_icons_host: https://exercism-icons-staging.s3.eu-west-2.amazonaws.com
+website_icons_host: https://exercism-v3-icons.s3.eu-west-2.amazonaws.com
 
 # Sidekiq Config
 sidekiq_redis_url: redis://127.0.0.1:6379/2
