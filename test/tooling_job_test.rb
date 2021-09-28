@@ -22,11 +22,22 @@ module Exercism
       assert_equal 'bar-2', job.foo
     end
 
+    def test_queues_job
+      redis = Exercism.redis_tooling_client
+      submission_uuid = SecureRandom.uuid
+      type = :test_runner
+
+      job = ToolingJob.create!(type, submission_uuid, :ruby, "two-fer")
+
+      assert redis.get("submission:#{submission_uuid}:#{type}")
+      assert redis.get("job:#{job.id}")
+    end
+
     def test_cancels_test_runner_job
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
 
-      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job = ToolingJob.create!(:test_runner, submission_uuid, :ruby, "two-fer")
       job.cancelled!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
@@ -37,7 +48,7 @@ module Exercism
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
 
-      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job = ToolingJob.create!(:test_runner, submission_uuid, :ruby, "two-fer")
       job.locked!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
@@ -50,7 +61,7 @@ module Exercism
       status = "foobar"
       output = "say what now"
 
-      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job = ToolingJob.create!(:test_runner, submission_uuid, :ruby, "two-fer")
       job.locked!
       job.executed!(status, output)
 
@@ -66,8 +77,12 @@ module Exercism
     def test_marks_job_as_processed
       redis = Exercism.redis_tooling_client
       submission_uuid = SecureRandom.uuid
+      type = :test_runner
 
-      job = ToolingJob.create!(submission_uuid, :test_runner, :ruby, "two-fer")
+      job = ToolingJob.create!(type, submission_uuid, :ruby, "two-fer")
+
+      assert redis.get("submission:#{submission_uuid}:#{type}")
+      assert redis.get("job:#{job.id}")
       job.locked!
       job.executed!(nil, nil)
       job.processed!
@@ -75,7 +90,9 @@ module Exercism
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
       assert_nil redis.lindex(ToolingJob.key_for_locked, 0)
       assert_nil redis.lindex(ToolingJob.key_for_executed, 0)
-      assert_equal job.id, redis.lindex(ToolingJob.key_for_processed, 0)
+
+      assert_nil redis.get("submission:#{submission_uuid}:#{type}")
+      assert_nil redis.get("job:#{job.id}")
     end
 
     def test_stores_and_retrieves_stdout

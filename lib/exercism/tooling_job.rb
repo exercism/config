@@ -90,7 +90,8 @@ module Exercism
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.lrem(key_for_executed, 1, id)
-        redis.rpush(key_for_processed, id)
+        redis.del("job:#{id}")
+        redis.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
       end
     end
 
@@ -163,7 +164,7 @@ module Exercism
       Exercism.config.aws_tooling_jobs_bucket
     end
 
-    %w[queued locked executed processed cancelled].each do |key|
+    %w[queued locked executed cancelled].each do |key|
       ToolingJob.singleton_class.class_eval do
         define_method "key_for_#{key}" do
           Exercism.env.production? ? key : "#{Exercism.env}:#{key}"
