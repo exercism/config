@@ -55,7 +55,7 @@ module Exercism
       data.key?(meth) || super
     end
 
-    def method_missing(meth)
+    def method_missing(meth, *args)
       super unless respond_to_missing?(meth)
 
       data[meth]
@@ -69,7 +69,7 @@ module Exercism
       end
     end
 
-    def executed!(status, output, exception)
+    def executed!(status, output)
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.lrem(key_for_queued, 1, id)
@@ -80,8 +80,7 @@ module Exercism
           "job:#{id}",
           data.merge(
             execution_status: status,
-            execution_output: output,
-            execution_exception: exception
+            execution_output: output
           ).to_json
         )
       end
@@ -107,16 +106,43 @@ module Exercism
       id == other.id
     end
 
-    def stderr
-      read_s3_file('stderr')
+    def store_stdout!(content)
+      write_s3_file!(:stdout, content)
+    end
+
+    def store_stderr!(content)
+      write_s3_file!(:stderr, content)
+    end
+
+    def store_metadata!(content)
+      write_s3_file!('metadata.json', content.to_json)
     end
 
     def stdout
-      read_s3_file('stdout')
+      read_s3_file(:stdout)
+    end
+
+    def stderr
+      read_s3_file(:stderr)
+    end
+
+    def metadata
+      JSON.parse(read_s3_file('metadata.json'))
+    rescue JSON::ParserError
+      {}
     end
 
     private
     attr_reader :data
+
+    def write_s3_file!(name, content)
+      Exercism.s3_client.put_object(
+        bucket: s3_bucket_name,
+        key: "#{s3_folder}/#{name}",
+        body: content,
+        acl: 'private'
+      )
+    end
 
     def read_s3_file(name)
       Exercism.s3_client.get_object(
