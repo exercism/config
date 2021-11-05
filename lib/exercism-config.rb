@@ -69,4 +69,17 @@ module Exercism
       c.auto_paginate = true
     end
   end
+
+  def self.opensearch_client
+    require 'elasticsearch'
+
+    # For now, we're using the ElasticSearch client, but this needs to be
+    # changed to the OpenSearch client once it becomes available
+    Elasticsearch::Client.new(
+      url: ENV.fetch("OPENSEARCH_HOST", config.opensearch_host),
+      user: ENV.fetch("OPENSEARCH_USER", config.opensearch_user),
+      password: ENV.fetch("OPENSEARCH_PASSWORD", self.secrets.opensearch_password),
+      transport_options: { ssl: { verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", config.opensearch_verify_ssl) != 'false' } }
+    )
+  end
 end

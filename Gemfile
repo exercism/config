@@ -12,3 +12,4 @@ gem 'rubocop-minitest'
 gem 'rubocop-performance'
 
 gem 'octokit'
+gem 'elasticsearch', '6.8.3'
