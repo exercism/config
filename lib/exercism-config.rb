@@ -79,7 +79,11 @@ module Exercism
       url: ENV.fetch("OPENSEARCH_HOST", config.opensearch_host),
       user: ENV.fetch("OPENSEARCH_USER", config.opensearch_user),
       password: ENV.fetch("OPENSEARCH_PASSWORD", self.secrets.opensearch_password),
-      transport_options: { ssl: { verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", config.opensearch_verify_ssl) != 'false' } }
+      transport_options: {
+        ssl: {
+          verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", config.opensearch_verify_ssl) != 'false'
+        }
+      }
     )
   end
 end
