@@ -81,7 +81,7 @@ module Exercism
       password: ENV.fetch("OPENSEARCH_PASSWORD", self.secrets.opensearch_password),
       transport_options: {
         ssl: {
-          verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", config.opensearch_verify_ssl) != 'false'
+          verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", config.opensearch_verify_ssl).to_s.downcase == "true"
         }
       }
     )
