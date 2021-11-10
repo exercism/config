@@ -27,6 +27,6 @@ class ExercismTest < Minitest::Test
 
     opensearch_client = Exercism.opensearch_client
     options = opensearch_client.instance_variable_get(:@transport).instance_variable_get(:@options)
-    assert_equal "https://localhost:9200", options[:url]
+    assert options[:transport_options][:ssl][:verify]
   end
 end
