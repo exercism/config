@@ -77,8 +77,8 @@ module Exercism
     # changed to the OpenSearch client once it becomes available
     Elasticsearch::Client.new(
       url: ENV.fetch("OPENSEARCH_HOST", config.opensearch_host),
-      user: ENV.fetch("OPENSEARCH_USER", nil),
-      password: ENV.fetch("OPENSEARCH_PASSWORD", nil),
+      user: ENV.fetch("OPENSEARCH_USER", Exercism.env.production? ? nil : "admin"),
+      password: ENV.fetch("OPENSEARCH_PASSWORD", Exercism.env.production? ? nil : "admin"),
       transport_options: {
         ssl: {
           verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", "true").to_s.casecmp?("true")
