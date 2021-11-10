@@ -23,6 +23,7 @@ Exercism.config.mysql_port
 Exercism.config.spi_url
 Exercism.config.tooling_orchestrator_url
 Exercism.config.language_server_url
+Exercism.config.opensearch_host
 
 # Secrets
 Exercism.secrets.github_access_token
@@ -37,6 +38,7 @@ Exercism.dynamodb_client
 Exercism.s3_client
 Exercism.ecr_client
 Exercism.octokit_client
+Exercism.opensearch_client
 ```
 
 ## Explanation

@@ -37,6 +37,9 @@ efs_repositories_mount_point: "/tmp/exercism/efs/repos"
 github_organization: fake-exercism
 github_bot_username: exercism-bot
 
+# OpenSearch
+opensearch_host: https://localhost:9200
+
 # Extra things not used in development, but here
 # so that this file can provide a reference
 website_assets_host:

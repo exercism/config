@@ -21,4 +21,12 @@ class ExercismTest < Minitest::Test
     octokit_client = Exercism.octokit_client
     assert octokit_client.auto_paginate
   end
+
+  def test_opensearch_client
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    opensearch_client = Exercism.opensearch_client
+    options = opensearch_client.instance_variable_get(:@transport).instance_variable_get(:@options)
+    assert options[:transport_options][:ssl][:verify]
+  end
 end
