@@ -24,7 +24,6 @@ Exercism.config.spi_url
 Exercism.config.tooling_orchestrator_url
 Exercism.config.language_server_url
 Exercism.config.opensearch_host
-Exercism.config.opensearch_verify_ssl
 
 # Secrets
 Exercism.secrets.github_access_token
