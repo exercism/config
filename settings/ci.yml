@@ -38,8 +38,7 @@ github_organization: fake-exercism
 github_bot_username: exercism-bot
 
 # OpenSearch
-opensearch_host: https://opensearch:9200
-opensearch_user: admin
+opensearch_host: https://opensearch:920
 opensearch_verify_ssl: true
 
 # Extra things not used in development, but here

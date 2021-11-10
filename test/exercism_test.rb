@@ -27,6 +27,6 @@ class ExercismTest < Minitest::Test
 
     opensearch_client = Exercism.opensearch_client
     options = opensearch_client.instance_variable_get(:@transport).instance_variable_get(:@options)
-    assert_equal "admin", options[:user]
+    assert_equal "https://localhost:9200", options[:url]
   end
 end

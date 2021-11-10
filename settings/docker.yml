@@ -39,7 +39,6 @@ github_bot_username: exercism-bot
 
 # OpenSearch
 opensearch_host: https://opensearch:9200
-opensearch_user: admin
 opensearch_verify_ssl: false
 
 # Extra things not used in development, but here
