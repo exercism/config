@@ -81,7 +81,7 @@ module Exercism
       password: ENV.fetch("OPENSEARCH_PASSWORD", Exercism.env.production? ? nil : "admin"),
       transport_options: {
         ssl: {
-          verify: ENV.fetch("OPENSEARCH_VERIFY_SSL", "true").to_s.casecmp?("true")
+          verify: Exercism.env.production?
         }
       }
     )
