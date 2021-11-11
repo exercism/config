@@ -38,7 +38,7 @@ github_organization: fake-exercism
 github_bot_username: exercism-bot
 
 # OpenSearch
-opensearch_host: https://opensearch:9200
+opensearch_host: https://127.0.0.1:9200
 
 # Extra things not used in development, but here
 # so that this file can provide a reference
