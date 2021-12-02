@@ -31,6 +31,19 @@ module Exercism
 
       assert redis.get("submission:#{submission_uuid}:#{type}")
       assert redis.get("job:#{job.id}")
+      assert_equal job.id, redis.lpop(ToolingJob.key_for_queued)
+    end
+
+    def test_queues_job_in_background
+      redis = Exercism.redis_tooling_client
+      submission_uuid = SecureRandom.uuid
+      type = :test_runner
+
+      job = ToolingJob.create!(type, submission_uuid, :ruby, "two-fer", run_in_background: true)
+
+      assert redis.get("submission:#{submission_uuid}:#{type}")
+      assert redis.get("job:#{job.id}")
+      assert_equal job.id, redis.lpop(ToolingJob.key_for_queued_in_background)
     end
 
     def test_cancels_test_runner_job
