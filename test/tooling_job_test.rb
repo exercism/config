@@ -43,7 +43,7 @@ module Exercism
 
       assert redis.get("submission:#{submission_uuid}:#{type}")
       assert redis.get("job:#{job.id}")
-      assert_equal job.id, redis.lpop(ToolingJob.key_for_queued_in_background)
+      assert_equal job.id, redis.lpop(ToolingJob.key_for_queued_for_background_processing)
     end
 
     def test_cancels_test_runner_job

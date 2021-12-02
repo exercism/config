@@ -18,7 +18,7 @@ module Exercism
         created_at: Time.now.utc.to_i
       )
 
-      queue_key = run_in_background ? key_for_queued_in_background : key_for_queued
+      queue_key = run_in_background ? key_for_queued_for_background_processing : key_for_queued
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.set(
@@ -167,7 +167,7 @@ module Exercism
       Exercism.config.aws_tooling_jobs_bucket
     end
 
-    %w[queued queued_in_background locked executed cancelled].each do |key|
+    %w[queued queued_for_background_processing locked executed cancelled].each do |key|
       ToolingJob.singleton_class.class_eval do
         define_method "key_for_#{key}" do
           Exercism.env.production? ? key : "#{Exercism.env}:#{key}"
