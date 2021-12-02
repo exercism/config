@@ -5,9 +5,11 @@ module Exercism
 
     extend Mandate::Memoize
 
-    def self.create!(type, submission_uuid, language, exercise, extra = {})
+    def self.create!(type, submission_uuid, language, exercise,
+                     run_in_background: false,
+                     **data)
       job_id = SecureRandom.uuid.tr('-', '')
-      data = extra.merge(
+      data.merge!(
         id: job_id,
         submission_uuid: submission_uuid,
         type: type,
@@ -16,13 +18,14 @@ module Exercism
         created_at: Time.now.utc.to_i
       )
 
+      queue_key = run_in_background ? key_for_queued_in_background : key_for_queued
       redis = Exercism.redis_tooling_client
       redis.multi do
         redis.set(
           "job:#{job_id}",
           data.to_json
         )
-        redis.rpush(key_for_queued, job_id)
+        redis.rpush(queue_key, job_id)
         redis.set("submission:#{submission_uuid}:#{type}", job_id)
       end
       new(job_id, data)
@@ -164,7 +167,7 @@ module Exercism
       Exercism.config.aws_tooling_jobs_bucket
     end
 
-    %w[queued locked executed cancelled].each do |key|
+    %w[queued queued_in_background locked executed cancelled].each do |key|
       ToolingJob.singleton_class.class_eval do
         define_method "key_for_#{key}" do
           Exercism.env.production? ? key : "#{Exercism.env}:#{key}"
