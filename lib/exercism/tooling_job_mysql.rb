@@ -1,7 +1,23 @@
+=begin
+
+CREATE TABLE `tooling_jobs` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(40) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `priority` varchar(20) NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_tooling_jobs_on_uuid` (`uuid`),
+  KEY `index_tooling_jobs_priority_status` (`priority`, `status`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+=end
+
 module Exercism
-  class ToolingJob
+  class ToolingJobMysql
     require 'aws-sdk-s3'
-    require 'redis'
+    require 'mysql2'
+    require 'sequel'
 
     extend Mandate::Memoize
 
@@ -16,27 +32,28 @@ module Exercism
         created_at: Time.now.utc.to_i
       )
 
-      redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.set(
+      mysql = Exercism.mysql_tooling_client
+      mysql.
+      mysql.multi do
+        mysql.set(
           "job:#{job_id}",
           data.to_json
         )
-        redis.rpush(key_for_queued, job_id)
-        redis.set("submission:#{submission_uuid}:#{type}", job_id)
+        mysql.rpush(key_for_queued, job_id)
+        mysql.set("submission:#{submission_uuid}:#{type}", job_id)
       end
       new(job_id, data)
     end
 
     def self.find(id)
-      json = Exercism.redis_tooling_client.get("job:#{id}")
+      json = Exercism.mysql_tooling_client.get("job:#{id}")
       new(id, JSON.parse(json))
     end
 
     def self.find_for_submission_uuid_and_type(submission_uuid, type)
-      redis = Exercism.redis_tooling_client
-      job_id = redis.get("submission:#{submission_uuid}:#{type}")
-      json = redis.get("job:#{job_id}")
+      mysql = Exercism.mysql_tooling_client
+      job_id = mysql.get("submission:#{submission_uuid}:#{type}")
+      json = mysql.get("job:#{job_id}")
       new(job_id, JSON.parse(json))
     end
 
@@ -62,21 +79,21 @@ module Exercism
     end
 
     def locked!
-      redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.rpush(key_for_locked, id)
+      mysql = Exercism.mysql_tooling_client
+      mysql.multi do
+        mysql.lrem(key_for_queued, 1, id)
+        mysql.rpush(key_for_locked, id)
       end
     end
 
     def executed!(status, output)
-      redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.lrem(key_for_locked, 1, id)
-        redis.rpush(key_for_executed, id)
+      mysql = Exercism.mysql_tooling_client
+      mysql.multi do
+        mysql.lrem(key_for_queued, 1, id)
+        mysql.lrem(key_for_locked, 1, id)
+        mysql.rpush(key_for_executed, id)
 
-        redis.set(
+        mysql.set(
           "job:#{id}",
           data.merge(
             execution_status: status,
@@ -87,19 +104,19 @@ module Exercism
     end
 
     def processed!
-      redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_executed, 1, id)
-        redis.del("job:#{id}")
-        redis.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
+      mysql = Exercism.mysql_tooling_client
+      mysql.multi do
+        mysql.lrem(key_for_executed, 1, id)
+        mysql.del("job:#{id}")
+        mysql.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
       end
     end
 
     def cancelled!
-      redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.rpush(key_for_cancelled, id)
+      mysql = Exercism.mysql_tooling_client
+      mysql.multi do
+        mysql.lrem(key_for_queued, 1, id)
+        mysql.rpush(key_for_cancelled, id)
       end
     end
 
@@ -164,7 +181,10 @@ module Exercism
       Exercism.config.aws_tooling_jobs_bucket
     end
 
-    %w[queued locked executed cancelled].each do |key|
+    %w[
+      queued queued_for_background_processing 
+      locked executed cancelled
+    ].each do |key|
       ToolingJob.singleton_class.class_eval do
         define_method "key_for_#{key}" do
           Exercism.env.production? ? key : "#{Exercism.env}:#{key}"
@@ -177,3 +197,4 @@ module Exercism
     end
   end
 end
+

@@ -71,3 +71,14 @@ gem 'exercism-config'
 require 'exercism-config'
 ExercismConfig.config.webservers_alb_dns_name
 ```
+
+```
+CREATE USER 'exercism'@'localhost' IDENTIFIED BY 'exercism';
+CREATE DATABASE exercism_tooling_development;
+ALTER DATABASE exercism_tooling_development CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON exercism_tooling_development.* TO 'exercism'@'localhost';
+
+CREATE DATABASE `exercism_test`;
+ALTER DATABASE `exercism_test` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON `exercism_test`.* TO 'exercism'@'localhost';
+```

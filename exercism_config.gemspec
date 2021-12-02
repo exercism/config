@@ -41,5 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aws-sdk-ecr'
   spec.add_development_dependency 'aws-sdk-s3'
   spec.add_development_dependency 'elasticsearch', '6.8.3'
-  spec.add_development_dependency 'redis'
+  spec.add_development_dependency 'mysql2'
+  spec.add_development_dependency 'sequel'
 end

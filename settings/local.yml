@@ -19,6 +19,11 @@ mysql_master_endpoint: localhost
 mysql_socket: /tmp/mysql.sock
 mysql_port: null
 
+# Tooling MySQL
+mysql_master_endpoint: localhost
+mysql_socket: /tmp/mysql.sock
+mysql_port: null
+
 # S3 Config
 aws_submissions_bucket: exercism-v3-submissions
 aws_tooling_jobs_bucket: exercism-v3-tooling-jobs

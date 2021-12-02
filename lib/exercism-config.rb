@@ -16,7 +16,8 @@ require_relative 'exercism_config/retrieve_secrets'
 require_relative 'exercism_config/version'
 require_relative 'exercism/config'
 require_relative 'exercism/secrets'
-require_relative 'exercism/tooling_job'
+require_relative 'exercism/tooling_job_redis'
+require_relative 'exercism/tooling_job_mysql'
 
 module Exercism
   class ConfigError < RuntimeError; end
@@ -35,6 +36,18 @@ module Exercism
 
   def self.redis_tooling_client
     Redis.new(url: config.tooling_redis_url)
+  end
+
+  def self.mysql_tooling_client
+    Sequel.connect(
+      adapter: 'mysql2',
+      host: config.tooling_mysql_master_endpoint,
+      socket: config.tooling_mysql_socket,
+      socket: config.tooling_mysql_port,
+      username: "exercism",
+      password: "exercism",
+      database: ["exercism_tooling", Exercism.env.production? nil : Exercism.env].compact.join("_")
+    )
   end
 
   def self.dynamodb_client
