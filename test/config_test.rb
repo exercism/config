@@ -31,7 +31,9 @@ module Exercism
       config = Config.new({ 'foo' => 'bar' }, { k: 'v' })
       expected = {
         'foo' => 'bar',
-        'aws_settings' => { 'k' => 'v' }
+        'aws_settings' => { 'k' => 'v' },
+        'dynamodb_tooling_jobs_table': nil,
+        'dynamodb_tooling_language_groups_table': nil
       }.to_json
       assert_equal expected, config.to_json
     end
