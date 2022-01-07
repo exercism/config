@@ -25,6 +25,7 @@ aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 
 # Hosts
 website_icons_host: https://exercism-v3-icons.s3.eu-west-2.amazonaws.com
+website_assets_host: '/assets'
 
 # Sidekiq Config
 sidekiq_redis_url: redis://127.0.0.1:6379/2
@@ -42,6 +43,5 @@ opensearch_host: https://127.0.0.1:9200
 
 # Extra things not used in development, but here
 # so that this file can provide a reference
-website_assets_host:
 aws_attachments_bucket:
 aws_attachments_region:
