@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Retrieves stored config for Exercism'
   spec.homepage      = 'https://exercism.io'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.6.6')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0.3')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/exercism/config'

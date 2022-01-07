@@ -21,14 +21,14 @@ module Exercism
 
     def respond_to_missing?(*args)
       super
-      true
     rescue NoMethodError
       false
     end
 
     PROPS_WITH_TEST_SUFFIX.each do |prop|
       define_method prop do
-        Exercism.env.test? ? "#{super()}-test" : super()
+        val = to_h[prop.to_sym]
+        Exercism.env.test? ? "#{val}-test" : val
       end
     end
 
