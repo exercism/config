@@ -20,13 +20,13 @@ module Exercism
 
       queue_key = run_in_background ? key_for_queued_for_background_processing : key_for_queued
       redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.set(
+      redis.multi do |transaction|
+        transaction.set(
           "job:#{job_id}",
           data.to_json
         )
-        redis.rpush(queue_key, job_id)
-        redis.set("submission:#{submission_uuid}:#{type}", job_id)
+        transaction.rpush(queue_key, job_id)
+        transaction.set("submission:#{submission_uuid}:#{type}", job_id)
       end
       new(job_id, data)
     end
@@ -66,20 +66,20 @@ module Exercism
 
     def locked!
       redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.rpush(key_for_locked, id)
+      redis.multi do |transaction|
+        transaction.lrem(key_for_queued, 1, id)
+        transaction.rpush(key_for_locked, id)
       end
     end
 
     def executed!(status, output)
       redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.lrem(key_for_locked, 1, id)
-        redis.rpush(key_for_executed, id)
+      redis.multi do |transaction|
+        transaction.lrem(key_for_queued, 1, id)
+        transaction.lrem(key_for_locked, 1, id)
+        transaction.rpush(key_for_executed, id)
 
-        redis.set(
+        transaction.set(
           "job:#{id}",
           data.merge(
             execution_status: status,
@@ -91,18 +91,18 @@ module Exercism
 
     def processed!
       redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_executed, 1, id)
-        redis.del("job:#{id}")
-        redis.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
+      redis.multi do |transaction|
+        transaction.lrem(key_for_executed, 1, id)
+        transaction.del("job:#{id}")
+        transaction.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
       end
     end
 
     def cancelled!
       redis = Exercism.redis_tooling_client
-      redis.multi do
-        redis.lrem(key_for_queued, 1, id)
-        redis.rpush(key_for_cancelled, id)
+      redis.multi do |transaction|
+        transaction.lrem(key_for_queued, 1, id)
+        transaction.rpush(key_for_cancelled, id)
       end
     end
 
