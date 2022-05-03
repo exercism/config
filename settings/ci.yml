@@ -16,7 +16,6 @@ tooling_orchestrator_url: http://127.0.0.1:3021
 
 # MySQL
 mysql_master_endpoint: 127.0.0.1
-mysql_socket: /tmp/mysql.
 mysql_port: <%= ENV["MYSQL_PORT"] %>
 
 # S3 Config
