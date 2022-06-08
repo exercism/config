@@ -65,8 +65,6 @@ settings_file_arg = ARGV.select { |arg| arg.start_with?('--settings-file=') }.fi
 settings_file =
   if settings_file_arg
     settings_file_arg.split('=').last
-  elsif ENV['EXERCISM_DOCKER']
-    File.expand_path('../settings/docker.yml', __dir__)
   elsif ENV['EXERCISM_CI']
     File.expand_path('../settings/ci.yml', __dir__)
   else
