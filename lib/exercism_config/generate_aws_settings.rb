@@ -26,8 +26,7 @@ module ExercismConfig
       return nil if Exercism.env.production?
       return "http://127.0.0.1:#{ENV['AWS_PORT']}" if Exercism.env.test? && ENV['EXERCISM_CI']
 
-      host = ENV['EXERCISM_DOCKER'] ? 'aws:3040' : 'localhost:3040'
-      "http://#{host}"
+      "http://localhost:3040"
     end
   end
 end

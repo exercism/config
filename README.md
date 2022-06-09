@@ -52,8 +52,7 @@ When running on AWS, simply ensure the machine has read-access to the relevant t
 
 This requires a local version of AWS to work.
 We use localstack for this.
-If you use the development-environment this will be handled for you.
-If not, to start localstack use the following:
+To start localstack use the following command:
 
 ```bash
 docker run -dp 3042:8080 -p 3040:4566 -p 3041:4566 localstack/localstack

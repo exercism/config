@@ -35,13 +35,7 @@ module ExercismConfig
     end
 
     def settings_filename
-      if ENV["EXERCISM_CI"]
-        'ci'
-      elsif ENV["EXERCISM_DOCKER"]
-        'docker'
-      else
-        'local'
-      end
+      ENV["EXERCISM_CI"] ? 'ci' : 'local'
     end
   end
 end
