@@ -78,12 +78,12 @@ Style/ZeroLengthPredicate:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Naming/FileName:
-  Exclude:
-    - "lib/exercism-config.rb"
-
 Naming/VariableNumber:
   EnforcedStyle: snake_case
+
+Naming/FileName:
+  Exclude:
+    - lib/exercism-config.rb
 
 Style/LambdaCall:
   EnforcedStyle: braces

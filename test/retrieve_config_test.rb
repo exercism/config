@@ -31,6 +31,7 @@ class RetrieveTest < Minitest::Test
   def test_config_for_development
     Exercism.stubs(env: ExercismConfig::Environment.new(:development))
     config = ExercismConfig::RetrieveConfig.()
+    p config
     assert_includes %w[
       mysql
       localhost
