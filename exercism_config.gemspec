@@ -42,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aws-sdk-s3'
   spec.add_development_dependency 'elasticsearch', '6.8.3'
   spec.add_development_dependency 'redis'
+  spec.add_development_dependency 'discourse_api'
 end

@@ -29,4 +29,11 @@ class ExercismTest < Minitest::Test
     options = opensearch_client.instance_variable_get(:@transport).instance_variable_get(:@options)
     refute options[:transport_options][:ssl][:verify]
   end
+
+  def test_discourse_client
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    discourse_client = Exercism.discourse_client
+    assert "https://forum.exercism.org", discourse_client.host
+  end
 end

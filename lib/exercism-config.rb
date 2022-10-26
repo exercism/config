@@ -86,4 +86,13 @@ module Exercism
       }
     )
   end
+
+  def self.discourse_client
+    require 'discourse_api'
+
+    DiscourseApi::Client.new("https://forum.exercism.org").tap do |client|
+      client.api_key = ENV.fetch("DISCOURSE_API_KEY", Exercism.secrets.discourse_api_key)
+      client.api_username = ENV.fetch("DISCOURSE_API_USERNAME", "system")
+    end
+  end
 end
