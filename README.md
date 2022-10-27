@@ -39,6 +39,7 @@ Exercism.s3_client
 Exercism.ecr_client
 Exercism.octokit_client
 Exercism.opensearch_client
+Exercism.discourse_client
 ```
 
 ## Explanation
