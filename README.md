@@ -32,6 +32,8 @@ Exercism.secrets.github_omniauth_app_secret
 Exercism.secrets.github_webhooks_secret
 Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
+Exercism.secrets.recaptcha_site_key
+Exercism.secrets.recaptcha_secret_key
 
 # Helper methods (create new clients)
 Exercism.dynamodb_client
