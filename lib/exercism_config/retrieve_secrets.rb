@@ -16,9 +16,9 @@ module ExercismConfig
       secrets_file = File.expand_path('../../settings/secrets.yml', __dir__)
       secrets = YAML.safe_load(ERB.new(File.read(secrets_file)).result)
 
-      personal_secrets_file = File.expand_path('../../settings/secrets-personal.yml', __dir__)
+      personal_secrets_file = "#{Dir.home}/.config/exercism/secrets.yml"
       if File.exist?(personal_secrets_file)
-        personal_secrets = YAML.safe_load(ERB.new(File.read(secrets_file)).result)
+        personal_secrets = YAML.safe_load(ERB.new(File.read(personal_secrets_file)).result)
         Exercism::Secrets.new(secrets.merge(personal_secrets))
       else
         Exercism::Secrets.new(secrets)
