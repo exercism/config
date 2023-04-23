@@ -19,9 +19,9 @@ class RetrieveTest < Minitest::Test
   def test_config_for_production
     Exercism.stubs(env: ExercismConfig::Environment.new(:production))
 
-    Aws::DynamoDB::Client.expects(:new).with(
+    Aws::DynamoDB::Client.expects(:new).with({
       region: 'eu-west-2'
-    ).returns(client)
+    }).returns(client)
 
     assert ExercismConfig::RetrieveConfig.()
   end

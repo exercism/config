@@ -16,7 +16,13 @@ module ExercismConfig
       secrets_file = File.expand_path('../../settings/secrets.yml', __dir__)
       secrets = YAML.safe_load(ERB.new(File.read(secrets_file)).result)
 
-      Exercism::Secrets.new(secrets)
+      personal_secrets_file = File.expand_path('../../settings/secrets-personal.yml', __dir__)
+      if File.exist?(personal_secrets_file)
+        personal_secrets = YAML.safe_load(ERB.new(File.read(secrets_file)).result)
+        Exercism::Secrets.new(secrets.merge(personal_secrets))
+      else
+        Exercism::Secrets.new(secrets)
+      end
     end
 
     def retrieve_from_aws
