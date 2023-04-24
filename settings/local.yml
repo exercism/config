@@ -6,7 +6,7 @@ anycable_rpc_host: 127.0.0.1:50051
 tooling_redis_url: redis://127.0.0.1:6379/3
 snippet_generator_url: http://local.exercism.io:3024/extract_snippet
 lines_of_code_counter_url: http://local.exercism.io:3025/count_lines_of_code
-chatgpt_proxy_url: http://local.exercism.io:3026/chatgpt_proxy
+chatgpt_proxy_url: http://local.exercism.io:3026/ask_chatgpt
 
 # DynamoDB config
 dynamodb_tooling_jobs_table: tooling_jobs
