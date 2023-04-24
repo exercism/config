@@ -44,7 +44,7 @@ module Exercism
     )
 
     @octokit_client ||= Octokit::Client.new(
-      access_token: access_token
+      access_token:
     ).tap do |c|
       c.auto_paginate = true
     end

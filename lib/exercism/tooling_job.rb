@@ -11,10 +11,10 @@ module Exercism
       job_id = SecureRandom.uuid.tr('-', '')
       data.merge!(
         id: job_id,
-        submission_uuid: submission_uuid,
-        type: type,
-        language: language,
-        exercise: exercise,
+        submission_uuid:,
+        type:,
+        language:,
+        exercise:,
         created_at: Time.now.utc.to_i
       )
 
