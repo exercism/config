@@ -36,7 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@168d6a54b412713c0ed60998a78093a270ca8d84
         with:
-          ruby-version: '3.0'
+          ruby-version: "3.2.1"
           bundler-cache: true
 
       ###
