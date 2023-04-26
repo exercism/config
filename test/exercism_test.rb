@@ -22,6 +22,13 @@ class ExercismTest < Minitest::Test
     assert octokit_client.auto_paginate
   end
 
+  def test_octokit_graphql_client
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    octokit_graphql_client = Exercism.octokit_graphql_client
+    assert octokit_graphql_client.auto_paginate
+  end
+
   def test_opensearch_client
     Exercism.stubs(env: ExercismConfig::Environment.new(:test))
 

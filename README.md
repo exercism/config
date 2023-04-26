@@ -30,6 +30,7 @@ Exercism.secrets.github_access_token
 Exercism.secrets.github_omniauth_app_id
 Exercism.secrets.github_omniauth_app_secret
 Exercism.secrets.github_webhooks_secret
+Exercism.secrets.github_graphql_readonly_access_token
 Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
 Exercism.secrets.recaptcha_site_key

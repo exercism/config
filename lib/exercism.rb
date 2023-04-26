@@ -50,6 +50,16 @@ module Exercism
     end
   end
 
+  def self.octokit_graphql_client
+    require 'octokit'
+
+    @octokit_graphql_client ||= Octokit::Client.new(
+      access_token: self.secrets.github_graphql_readonly_access_token
+    ).tap do |c|
+      c.auto_paginate = true
+    end
+  end
+
   def self.opensearch_client
     require 'elasticsearch'
 
