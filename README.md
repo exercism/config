@@ -24,6 +24,7 @@ Exercism.config.spi_url
 Exercism.config.tooling_orchestrator_url
 Exercism.config.language_server_url
 Exercism.config.opensearch_host
+Exercism.config.paypal_api_url
 
 # Secrets
 Exercism.secrets.github_access_token
@@ -54,9 +55,6 @@ Exercism.secrets.paypal_client_id
 Exercism.secrets.paypal_client_secret
 Exercism.secrets.paypal_donation_product_name
 Exercism.secrets.paypal_premium_product_name
-Exercism.secrets.paypal_premium_monthly_plan_id
-Exercism.secrets.paypal_premium_yearly_plan_id
-Exercism.secrets.paypal_premium_lifetime_plan_id
 Exercism.secrets.chatgpt_access_token
 
 # Helper methods (create new clients)

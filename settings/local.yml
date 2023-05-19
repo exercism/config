@@ -47,3 +47,6 @@ opensearch_host: https://localhost:9200
 # so that this file can provide a reference
 aws_attachments_bucket:
 aws_attachments_region:
+
+# PayPal
+paypal_api_url: https://api-m.sandbox.paypal.com
