@@ -35,6 +35,14 @@ Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
 Exercism.secrets.recaptcha_site_key
 Exercism.secrets.recaptcha_secret_key
+Exercism.secrets.stripe_secret_key
+Exercism.secrets.stripe_publishable_key
+Exercism.secrets.stripe_endpoint_secret
+Exercism.secrets.stripe_recurring_product_id
+Exercism.secrets.stripe_premium_product_id
+Exercism.secrets.stripe_premium_monthly_price_id
+Exercism.secrets.stripe_premium_yearly_price_id
+Exercism.secrets.stripe_premium_lifetime_price_id
 
 # Helper methods (create new clients)
 Exercism.dynamodb_client
