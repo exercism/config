@@ -33,8 +33,7 @@ Exercism.secrets.github_webhooks_secret
 Exercism.secrets.github_graphql_readonly_access_token
 Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
-Exercism.secrets.recaptcha_site_key
-Exercism.secrets.recaptcha_secret_key
+Exercism.secrets.website_secret_key_base
 Exercism.secrets.stripe_secret_key
 Exercism.secrets.stripe_publishable_key
 Exercism.secrets.stripe_endpoint_secret
@@ -43,6 +42,22 @@ Exercism.secrets.stripe_premium_product_id
 Exercism.secrets.stripe_premium_monthly_price_id
 Exercism.secrets.stripe_premium_yearly_price_id
 Exercism.secrets.stripe_premium_lifetime_price_id
+Exercism.secrets.slack_api_token
+Exercism.secrets.google_api_key
+Exercism.secrets.discourse_oauth_secret
+Exercism.secrets.discourse_api_key
+Exercism.secrets.recaptcha_site_key
+Exercism.secrets.recaptcha_secret_key
+Exercism.secrets.coinbase_webhooks_secret
+Exercism.secrets.paypal_webhook_id
+Exercism.secrets.paypal_client_id
+Exercism.secrets.paypal_client_secret
+Exercism.secrets.paypal_donation_product_name
+Exercism.secrets.paypal_premium_product_name
+Exercism.secrets.paypal_premium_monthly_plan_id
+Exercism.secrets.paypal_premium_yearly_plan_id
+Exercism.secrets.paypal_premium_lifetime_plan_id
+Exercism.secrets.chatgpt_access_token
 
 # Helper methods (create new clients)
 Exercism.dynamodb_client
