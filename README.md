@@ -35,6 +35,7 @@ Exercism.secrets.hcaptcha_site_key
 Exercism.secrets.hcaptcha_secret
 Exercism.secrets.recaptcha_site_key
 Exercism.secrets.recaptcha_secret_key
+Exercism.secrets.sparkpost_api_key
 
 # Helper methods (create new clients)
 Exercism.dynamodb_client
