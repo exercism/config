@@ -55,6 +55,8 @@ Exercism.secrets.paypal_client_id
 Exercism.secrets.paypal_client_secret
 Exercism.secrets.paypal_donation_product_name
 Exercism.secrets.paypal_premium_product_name
+Exercism.secrets.paypal_premium_monthly_plan_id
+Exercism.secrets.paypal_premium_yearly_plan_id
 Exercism.secrets.chatgpt_access_token
 Exercism.secrets.sparkpost_api_key
 
