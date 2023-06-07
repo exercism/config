@@ -50,4 +50,4 @@ aws_attachments_region:
 
 # PayPal
 paypal_api_url: https://api-m.sandbox.paypal.com
-paypal_url: https://www.paypal.com
+paypal_url: https://www.sandbox.paypal.com
