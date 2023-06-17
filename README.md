@@ -62,6 +62,18 @@ Exercism.secrets.paypal_lifetime_insiders_hosted_button_id
 Exercism.secrets.chatgpt_access_token
 Exercism.secrets.sparkpost_api_key
 
+Exercism.secrets.transactional_smtp_username
+Exercism.secrets.transactional_smtp_password
+Exercism.secrets.transactional_smtp_address
+Exercism.secrets.transactional_smtp_port
+Exercism.secrets.transactional_smtp_authentication
+
+Exercism.secrets.bulk_smtp_username
+Exercism.secrets.bulk_smtp_password
+Exercism.secrets.bulk_smtp_address
+Exercism.secrets.bulk_smtp_port
+Exercism.secrets.bulk_smtp_authentication
+
 # Helper methods (create new clients)
 Exercism.dynamodb_client
 Exercism.s3_client
