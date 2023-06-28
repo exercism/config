@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   # own Gemfile when using this.
   spec.add_development_dependency 'aws-sdk-ecr'
   spec.add_development_dependency 'aws-sdk-s3'
+  spec.add_development_dependency 'aws-sdk-cloudwatchlogs'
   spec.add_development_dependency 'discourse_api'
   spec.add_development_dependency 'elasticsearch', '6.8.3'
   spec.add_development_dependency 'redis'

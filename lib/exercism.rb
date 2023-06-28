@@ -35,6 +35,12 @@ module Exercism
     Aws::ECR::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
+  def self.cloudwatch_logs_client
+    require 'aws-sdk-cloudwatchlogs'
+    Aws::CloudWatchLogs::Client.new(ExercismConfig::GenerateAwsSettings.())
+  end
+
+
   def self.octokit_client
     require 'octokit'
 
