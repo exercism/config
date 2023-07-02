@@ -91,4 +91,11 @@ module Exercism
       client.api_username = ENV.fetch("DISCOURSE_API_USERNAME", "system")
     end
   end
+
+  def self.mongodb_client
+    require 'mongo'
+    url = ENV.fetch( "MONGODB_URL", self.config.mongodb_url)
+
+    Mongo::Client.new([ url ], :database => self.config.mongodb_database_name)
+  end
 end
