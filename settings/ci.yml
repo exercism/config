@@ -54,4 +54,5 @@ aws_attachments_region:
 paypal_api_url: https://api-m.sandbox.paypal.com
 paypal_url: https://www.sandbox.paypal.com
 
-
+mongodb_url: '127.0.0.1:27017'
+mongodb_database_name: 'exercism'
