@@ -94,8 +94,9 @@ module Exercism
 
   def self.mongodb_client
     require 'mongo'
-    url = ENV.fetch( "MONGODB_URL", self.config.mongodb_url)
-
-    Mongo::Client.new([ url ], :database => self.config.mongodb_database_name)
+    Mongo::Client.new(
+      self.config.mongodb_url,
+      database: self.config.mongodb_database_name
+    )
   end
 end
