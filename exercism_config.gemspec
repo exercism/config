@@ -42,6 +42,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aws-sdk-s3'
   spec.add_development_dependency 'aws-sdk-cloudwatchlogs'
   spec.add_development_dependency 'discourse_api'
-  spec.add_development_dependency 'elasticsearch', '6.8.3'
+  spec.add_development_dependency 'opensearch-ruby', '2.1.0'
   spec.add_development_dependency 'redis'
 end
