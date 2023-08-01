@@ -40,7 +40,6 @@ module Exercism
     Aws::CloudWatchLogs::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
-
   def self.octokit_client
     require 'octokit'
 
