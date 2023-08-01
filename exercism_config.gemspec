@@ -38,10 +38,10 @@ Gem::Specification.new do |spec|
   # This isn't a compulsary dependency
   # but can be used if someone puts it in their
   # own Gemfile when using this.
+  spec.add_development_dependency 'aws-sdk-cloudwatchlogs'
   spec.add_development_dependency 'aws-sdk-ecr'
   spec.add_development_dependency 'aws-sdk-s3'
-  spec.add_development_dependency 'aws-sdk-cloudwatchlogs'
   spec.add_development_dependency 'discourse_api'
-  spec.add_development_dependency 'elasticsearch', '6.8.3'
+  spec.add_development_dependency 'opensearch-ruby', '2.1.0'
   spec.add_development_dependency 'redis'
 end
