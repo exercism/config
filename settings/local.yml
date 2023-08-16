@@ -29,7 +29,7 @@ aws_submissions_bucket: exercism-v3-submissions
 aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 
 # Hosts
-website_icons_host: https://exercism-v3-icons.s3.eu-west-2.amazonaws.com
+website_icons_host: https://assets.exercism.org
 website_assets_host:
 
 # Sidekiq Config
