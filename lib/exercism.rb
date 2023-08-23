@@ -40,6 +40,11 @@ module Exercism
     Aws::CloudWatchLogs::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
+  def self.cloudfront_client
+    require 'aws-sdk-cloudfront'
+    Aws::CloudFront::Client.new(ExercismConfig::GenerateAwsSettings.())
+  end
+
   def self.octokit_client
     require 'octokit'
 
