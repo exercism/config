@@ -30,7 +30,7 @@ aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 # Hosts
 website_icons_host: https://assets.exercism.org
 website_assets_host: ""
-website_avatars_host: http://local.exercism.io:3020/avatars
+website_avatars_host: http://127.0.0.1:3020/avatars
 website_assets_cloudfront_distribution_id: "123456"
 
 # Sidekiq Config
