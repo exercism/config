@@ -5,6 +5,11 @@ class ExercismTest < Minitest::Test
     assert Exercism.env
   end
 
+  def test_cloudfront_client
+    cloudfront_client = Exercism.cloudfront_client
+    assert_equal "eu-west-2", cloudfront_client.config.region
+  end
+
   def test_dynamodb_client
     dynamodb_client = Exercism.dynamodb_client
     assert_equal "eu-west-2", dynamodb_client.config.region
