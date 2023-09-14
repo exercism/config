@@ -20,6 +20,11 @@ class ExercismTest < Minitest::Test
     assert_equal "eu-west-2", ecr_client.config.region
   end
 
+  def test_ses_client
+    ses_client = Exercism.ses_client
+    assert_equal "eu-west-2", ses_client.config.region
+  end
+
   def test_octokit_client
     Exercism.stubs(env: ExercismConfig::Environment.new(:test))
 

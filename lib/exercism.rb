@@ -45,6 +45,11 @@ module Exercism
     Aws::CloudFront::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
+  def self.ses_client
+    require 'aws-sdk-sesv2'
+    Aws::SESV2::Client.new(ExercismConfig::GenerateAwsSettings.())
+  end
+
   def self.octokit_client
     require 'octokit'
 
