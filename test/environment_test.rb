@@ -13,7 +13,7 @@ module ExercismConfig
 
       refute env.test?
       refute env.production?
-      refute env == "production"
+      refute_equal env, "production"
     end
 
     def test_test
@@ -27,7 +27,7 @@ module ExercismConfig
 
       refute env.development?
       refute env.production?
-      refute env == "production"
+      refute_equal env, "production"
     end
 
     def test_production
@@ -41,7 +41,7 @@ module ExercismConfig
 
       refute env.test?
       refute env.development?
-      refute env == "development"
+      refute_equal env, "development"
     end
 
     def test_invalid_env
