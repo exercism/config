@@ -61,6 +61,7 @@ Exercism.secrets.paypal_premium_yearly_plan_id
 Exercism.secrets.paypal_lifetime_insiders_hosted_button_id
 Exercism.secrets.chatgpt_access_token
 Exercism.secrets.sparkpost_api_key
+Exercism.secrets.openai_api_key
 
 Exercism.secrets.transactional_smtp_username
 Exercism.secrets.transactional_smtp_password
@@ -81,6 +82,7 @@ Exercism.ecr_client
 Exercism.octokit_client
 Exercism.opensearch_client
 Exercism.discourse_client
+Exercism.openai_client
 ```
 
 ## Explanation

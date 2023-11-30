@@ -108,4 +108,10 @@ module Exercism
       database: self.config.mongodb_database_name
     )
   end
+
+  def self.openai_client
+    require 'openai'
+
+    @openai_client ||= OpenAI::Client.new(access_token: self.secrets.openai_api_key)
+  end
 end
