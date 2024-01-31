@@ -32,7 +32,8 @@ aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 website_icons_host: https://assets.exercism.org
 website_assets_host:
 website_avatars_host: /avatars
-website_assets_cloudfront_distribution_id: "123456"
+assets_cloudfront_distribution_id: "123456"
+website_cloudfront_distribution_id: "654321"
 
 # Sidekiq Config
 sidekiq_redis_url: redis://127.0.0.1:6379/2
