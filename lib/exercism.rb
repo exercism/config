@@ -58,9 +58,7 @@ module Exercism
       self.secrets.github_access_token
     )
 
-    @octokit_client ||= Octokit::Client.new(
-      access_token:
-    ).tap do |c|
+    @octokit_client ||= Octokit::Client.new(access_token:).tap do |c|
       c.auto_paginate = true
     end
   end
@@ -68,9 +66,12 @@ module Exercism
   def self.octokit_graphql_client
     require 'octokit'
 
-    @octokit_graphql_client ||= Octokit::Client.new(
-      access_token: self.secrets.github_graphql_readonly_access_token
-    ).tap do |c|
+    access_token = ENV.fetch(
+      "GITHUB_GRAPHQL_READONLY_ACCESS_TOKEN",
+      self.secrets.github_graphql_readonly_access_token
+    )
+
+    @octokit_graphql_client ||= Octokit::Client.new(access_token:).tap do |c|
       c.auto_paginate = true
     end
   end
