@@ -14,7 +14,14 @@ module Exercism
   end
 
   def self.redis_tooling_client
-    Redis.new(url: config.tooling_redis_url)
+    require 'redis'
+    require 'redis-clustering'
+
+    if Exercism.env.development? || Exercism.env.test?
+      Redis.new(url: config.tooling_redis_url)
+    else
+      Redis::Cluster.new(nodes: [config.tooling_redis_url])
+    end
   end
 
   def self.dynamodb_client

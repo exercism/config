@@ -45,5 +45,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aws-sdk-sesv2'
   spec.add_development_dependency 'discourse_api'
   spec.add_development_dependency 'opensearch-ruby', '2.1.0'
-  spec.add_development_dependency 'redis'
+  spec.add_development_dependency 'redis', '~> 5.1'
+  spec.add_development_dependency 'redis-clustering', '~> 5.1'
 end
