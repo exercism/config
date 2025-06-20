@@ -1,8 +1,6 @@
 module Exercism
   class ToolingJob
     require 'aws-sdk-s3'
-    require 'redis'
-    require 'redis-clustering'
 
     extend Mandate::Memoize
 

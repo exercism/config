@@ -14,7 +14,10 @@ module Exercism
   end
 
   def self.redis_tooling_client
-    if Exercism.env.development?
+    require 'redis'
+    require 'redis-clustering'
+
+    if Exercism.env.development? || Exercism.env.test?
       Redis.new(url: config.tooling_redis_url)
     else
       Redis::Cluster.new(nodes: [config.tooling_redis_url])
