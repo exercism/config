@@ -14,7 +14,11 @@ module Exercism
   end
 
   def self.redis_tooling_client
-    Redis.new(url: config.tooling_redis_url)
+    if Exercism.env.development?
+      Redis.new(url: config.tooling_redis_url)
+    else
+      Redis::Cluster.new(nodes: [config.tooling_redis_url])
+    end
   end
 
   def self.dynamodb_client

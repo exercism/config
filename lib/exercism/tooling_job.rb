@@ -2,13 +2,23 @@ module Exercism
   class ToolingJob
     require 'aws-sdk-s3'
     require 'redis'
+    require 'redis-clustering'
 
     extend Mandate::Memoize
 
-    def self.create!(type, submission_uuid, language, exercise,
+    def self.efs_job_path(job_id)
+      raise ArgumentError, "job_id must be at least 7 characters" if job_id.length < 7
+      
+      [job_id[0..2], job_id[3..5], job_id[6..]].join('/')
+    end
+
+    def self.efs_full_path(job_id)
+      [Exercism.config.efs_submissions_mount_point, efs_job_path(job_id)].join('/')
+    end
+
+    def self.create!(job_id, type, submission_uuid, language, exercise,
                      run_in_background: false,
                      **data)
-      job_id = SecureRandom.uuid.tr('-', '')
       data.merge!(
         id: job_id,
         submission_uuid:,
@@ -20,14 +30,10 @@ module Exercism
 
       queue_key = run_in_background ? key_for_queued_for_background_processing : key_for_queued
       redis = Exercism.redis_tooling_client
-      redis.multi do |transaction|
-        transaction.set(
-          "job:#{job_id}",
-          data.to_json
-        )
-        transaction.rpush(queue_key, job_id)
-        transaction.set("submission:#{submission_uuid}:#{type}", job_id)
-      end
+      redis.set("job:#{job_id}", data.to_json)
+      redis.set("submission:#{submission_uuid}:#{type}", job_id)
+      redis.rpush(queue_key, job_id)
+
       new(job_id, data)
     end
 
@@ -47,6 +53,8 @@ module Exercism
 
     def initialize(id, data)
       @id = id
+      p data
+      p @data
       @data = data.transform_keys(&:to_sym).freeze
     end
 
@@ -55,6 +63,7 @@ module Exercism
     end
 
     def respond_to_missing?(meth, include_all = true)
+      p meth
       data.key?(meth) || super
     end
 
@@ -78,24 +87,22 @@ module Exercism
         transaction.lrem(key_for_queued, 1, id)
         transaction.lrem(key_for_locked, 1, id)
         transaction.rpush(key_for_executed, id)
-
-        transaction.set(
-          "job:#{id}",
-          data.merge(
-            execution_status: status,
-            execution_output: output
-          ).to_json
-        )
       end
+
+      redis.set(
+        "job:#{id}",
+        data.merge(
+          execution_status: status,
+          execution_output: output
+        ).to_json
+      )
     end
 
     def processed!
       redis = Exercism.redis_tooling_client
-      redis.multi do |transaction|
-        transaction.lrem(key_for_executed, 1, id)
-        transaction.del("job:#{id}")
-        transaction.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
-      end
+      redis.lrem(key_for_executed, 1, id)
+      redis.del("job:#{id}")
+      redis.del("submission:#{data[:submission_uuid]}:#{data[:type]}")
     end
 
     def cancelled!
@@ -158,14 +165,10 @@ module Exercism
     end
 
     memoize
-    def s3_folder
-      "#{Exercism.env}/#{id}"
-    end
+    def s3_folder = "#{Exercism.env}/#{id}"
 
     memoize
-    def s3_bucket_name
-      Exercism.config.aws_tooling_jobs_bucket
-    end
+    def s3_bucket_name = Exercism.config.aws_tooling_jobs_bucket
 
     %w[queued queued_for_background_processing locked executed cancelled].each do |key|
       ToolingJob.singleton_class.class_eval do
