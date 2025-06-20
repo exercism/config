@@ -53,8 +53,6 @@ module Exercism
 
     def initialize(id, data)
       @id = id
-      p data
-      p @data
       @data = data.transform_keys(&:to_sym).freeze
     end
 
@@ -63,7 +61,6 @@ module Exercism
     end
 
     def respond_to_missing?(meth, include_all = true)
-      p meth
       data.key?(meth) || super
     end
 
