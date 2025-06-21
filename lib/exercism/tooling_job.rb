@@ -4,23 +4,14 @@ module Exercism
 
     extend Mandate::Memoize
 
-    def self.efs_job_path(job_id)
-      raise ArgumentError, "job_id must be at least 7 characters" if job_id.length < 7
-      
-      [job_id[0..2], job_id[3..5], job_id[6..]].join('/')
-    end
-
-    def self.efs_full_path(job_id)
-      [Exercism.config.efs_submissions_mount_point, efs_job_path(job_id)].join('/')
-    end
-
-    def self.create!(job_id, type, submission_uuid, language, exercise,
+    def self.create!(job_id, type, submission_uuid, efs_dir, language, exercise,
                      run_in_background: false,
                      **data)
       data.merge!(
         id: job_id,
-        submission_uuid:,
         type:,
+        submission_uuid:,
+        efs_dir: ,
         language:,
         exercise:,
         created_at: Time.now.utc.to_i
