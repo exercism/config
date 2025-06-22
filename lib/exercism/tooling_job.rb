@@ -4,9 +4,11 @@ module Exercism
 
     extend Mandate::Memoize
 
-    def self.create!(job_id, type, submission_uuid, efs_dir, language, exercise,
+    def self.create!(
+      job_id, type, submission_uuid, efs_dir, language, exercise,
                      run_in_background: false,
-                     **data)
+                     **data
+                     )
       data.merge!(
         id: job_id,
         type:,
