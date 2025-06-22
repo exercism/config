@@ -28,7 +28,7 @@ module Exercism
       id = SecureRandom.hex
       type = :test_runner
 
-      job = ToolingJob.create!(id, type, submission_uuid, "",  :ruby, "two-fer")
+      job = ToolingJob.create!(id, type, submission_uuid, "", :ruby, "two-fer")
 
       assert redis.get("submission:#{submission_uuid}:#{type}")
       assert redis.get("job:#{id}")
@@ -41,7 +41,7 @@ module Exercism
       id = SecureRandom.hex
       type = :test_runner
 
-      ToolingJob.create!(id, type, submission_uuid, "",  :ruby, "two-fer", run_in_background: true)
+      ToolingJob.create!(id, type, submission_uuid, "", :ruby, "two-fer", run_in_background: true)
 
       assert redis.get("submission:#{submission_uuid}:#{type}")
       assert redis.get("job:#{id}")
@@ -53,7 +53,7 @@ module Exercism
       submission_uuid = SecureRandom.uuid
       id = SecureRandom.hex
 
-      job = ToolingJob.create!(id, :test_runner, submission_uuid, "",  :ruby, "two-fer")
+      job = ToolingJob.create!(id, :test_runner, submission_uuid, "", :ruby, "two-fer")
       job.cancelled!
 
       assert_nil redis.lindex(ToolingJob.key_for_queued, 0)
@@ -78,7 +78,7 @@ module Exercism
       id = SecureRandom.hex
       type = :test_runner
 
-      job = ToolingJob.create!(id, type, submission_uuid, "",  :ruby, "two-fer")
+      job = ToolingJob.create!(id, type, submission_uuid, "", :ruby, "two-fer")
 
       assert redis.get("submission:#{submission_uuid}:#{type}")
       assert redis.get("job:#{id}")

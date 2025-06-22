@@ -6,14 +6,14 @@ module Exercism
 
     def self.create!(
       job_id, type, submission_uuid, efs_dir, language, exercise,
-                     run_in_background: false,
-                     **data
-                     )
+      run_in_background: false,
+      **data
+    )
       data.merge!(
         id: job_id,
         type:,
         submission_uuid:,
-        efs_dir: ,
+        efs_dir:,
         language:,
         exercise:,
         created_at: Time.now.utc.to_i
