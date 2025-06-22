@@ -63,19 +63,15 @@ module Exercism
 
     def locked!
       redis = Exercism.redis_tooling_client
-      redis.multi do |transaction|
-        transaction.lrem(key_for_queued, 1, id)
-        transaction.rpush(key_for_locked, id)
-      end
+      redis.lrem(key_for_queued, 1, id)
+      redis.rpush(key_for_locked, id)
     end
 
     def executed!(status, output)
       redis = Exercism.redis_tooling_client
-      redis.multi do |transaction|
-        transaction.lrem(key_for_queued, 1, id)
-        transaction.lrem(key_for_locked, 1, id)
-        transaction.rpush(key_for_executed, id)
-      end
+      redis.lrem(key_for_queued, 1, id)
+      redis.lrem(key_for_locked, 1, id)
+      redis.rpush(key_for_executed, id)
 
       redis.set(
         "job:#{id}",
@@ -95,10 +91,8 @@ module Exercism
 
     def cancelled!
       redis = Exercism.redis_tooling_client
-      redis.multi do |transaction|
-        transaction.lrem(key_for_queued, 1, id)
-        transaction.rpush(key_for_cancelled, id)
-      end
+      redis.lrem(key_for_queued, 1, id)
+      redis.rpush(key_for_cancelled, id)
     end
 
     def ==(other)
