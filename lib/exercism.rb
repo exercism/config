@@ -13,25 +13,18 @@ module Exercism
     @secrets ||= ExercismConfig::RetrieveSecrets.()
   end
 
-  def self.redis_tooling_client
+  def self.redis_tooling_client = redis_client(config.tooling_redis_url)
+  def self.redis_git_cache_client = redis_client(config.git_cache_redis_url)
+  def self.redis_cache_client = redis_client(config.cache_redis_url)
+
+  def self.redis_client(url)
     require 'redis'
     require 'redis-clustering'
 
     if Exercism.env.development? || Exercism.env.test?
-      Redis.new(url: config.tooling_redis_url)
+      Redis.new(url:)
     else
-      Redis::Cluster.new(nodes: [config.tooling_redis_url])
-    end
-  end
-
-  def self.redis_git_cache_client
-    require 'redis'
-    require 'redis-clustering'
-
-    if Exercism.env.development? || Exercism.env.test?
-      Redis.new(url: config.git_cache_redis_url)
-    else
-      Redis::Cluster.new(nodes: [config.git_cache_redis_url])
+      Redis::Cluster.new(nodes: [url])
     end
   end
 
