@@ -1,3 +1,3 @@
 module ExercismConfig
-  VERSION = '0.127.0'.freeze
+  VERSION = '0.128.0'.freeze
 end
