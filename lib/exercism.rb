@@ -24,6 +24,17 @@ module Exercism
     end
   end
 
+  def self.redis_git_cache_client
+    require 'redis'
+    require 'redis-clustering'
+
+    if Exercism.env.development? || Exercism.env.test?
+      Redis.new(url: config.git_cache_redis_url)
+    else
+      Redis::Cluster.new(nodes: [config.git_cache_redis_url])
+    end
+  end
+
   def self.dynamodb_client
     Aws::DynamoDB::Client.new(ExercismConfig::GenerateAwsSettings.())
   end

@@ -10,6 +10,10 @@ chatgpt_proxy_url: http://127.0.0.1:3026/ask_chatgpt
 tooling_cloudwatch_jobs_log_group_name: "/tooling-jobs"
 tooling_cloudwatch_jobs_log_stream_name: "general"
 
+# Redis Caches
+git_cache_redis_url: redis://127.0.0.1:6379/4
+cache_redis_url: redis://127.0.0.1:6379/5
+
 # DynamoDB config
 dynamodb_tooling_jobs_table: tooling_jobs
 dynamodb_tooling_language_groups_table: tooling_language_groups

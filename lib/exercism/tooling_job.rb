@@ -4,6 +4,10 @@ module Exercism
 
     extend Mandate::Memoize
 
+    def self.git_cache_key(repo, sha, dir, filepath)
+      "#{repo}:#{sha}:#{dir}/#{filepath}"
+    end
+
     def self.create!(
       job_id, type, submission_uuid, efs_dir, language, exercise,
       run_in_background: false,
