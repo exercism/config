@@ -13,9 +13,10 @@ module Exercism
     @secrets ||= ExercismConfig::RetrieveSecrets.()
   end
 
-  def self.redis_tooling_client = redis_client(config.tooling_redis_url)
-  def self.redis_git_cache_client = redis_client(config.git_cache_redis_url)
-  def self.redis_cache_client = redis_client(config.cache_redis_url)
+  # Pooled rather than built per call - see Exercism::RedisPool for why.
+  def self.redis_tooling_client = RedisPool.for(:tooling) { redis_client(config.tooling_redis_url) }
+  def self.redis_git_cache_client = RedisPool.for(:git_cache) { redis_client(config.git_cache_redis_url) }
+  def self.redis_cache_client = RedisPool.for(:cache) { redis_client(config.cache_redis_url) }
 
   def self.redis_client(url)
     require 'redis'

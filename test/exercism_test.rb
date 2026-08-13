@@ -53,4 +53,42 @@ class ExercismTest < Minitest::Test
     discourse_client = Exercism.discourse_client
     assert "https://forum.exercism.org", discourse_client.host
   end
+
+  def test_redis_pool_is_reused_between_calls
+    pool = Exercism::RedisPool.for(:test_reused) { build_test_redis_client }
+    assert_same pool, Exercism::RedisPool.for(:test_reused) { build_test_redis_client }
+  end
+
+  def test_redis_pool_is_separate_per_key
+    refute_same(
+      Exercism::RedisPool.for(:test_key_one) { build_test_redis_client },
+      Exercism::RedisPool.for(:test_key_two) { build_test_redis_client }
+    )
+  end
+
+  def test_redis_pool_is_rebuilt_after_fork
+    pool = Exercism::RedisPool.for(:test_forked) { build_test_redis_client }
+
+    Process.stubs(pid: Process.pid + 1)
+    refute_same pool, Exercism::RedisPool.for(:test_forked) { build_test_redis_client }
+  end
+
+  def test_redis_client_is_pooled_rather_than_rebuilt
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    assert_same Exercism.redis_tooling_client, Exercism.redis_tooling_client
+    refute_same Exercism.redis_tooling_client, Exercism.redis_cache_client
+  end
+
+  def test_redis_pool_size_is_configurable
+    assert_equal Exercism::RedisPool::DEFAULT_SIZE, Exercism::RedisPool.size
+
+    ENV['EXERCISM_REDIS_POOL_SIZE'] = '17'
+    assert_equal 17, Exercism::RedisPool.size
+  ensure
+    ENV.delete('EXERCISM_REDIS_POOL_SIZE')
+  end
+
+  private
+  def build_test_redis_client = Redis.new(url: 'redis://localhost:6379')
 end

@@ -43,6 +43,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aws-sdk-ecr'
   spec.add_development_dependency 'aws-sdk-s3'
   spec.add_development_dependency 'aws-sdk-sesv2'
+  spec.add_development_dependency 'connection_pool'
   spec.add_development_dependency 'discourse_api'
   spec.add_development_dependency 'opensearch-ruby', '2.1.0'
   spec.add_development_dependency 'redis', '~> 5.1'
