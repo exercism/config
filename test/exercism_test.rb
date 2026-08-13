@@ -5,6 +5,27 @@ class ExercismTest < Minitest::Test
     assert Exercism.env
   end
 
+  def test_redis_clients_are_reused
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    assert_same Exercism.redis_cache_client, Exercism.redis_cache_client
+  end
+
+  def test_redis_clients_are_per_url
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    refute_same Exercism.redis_client("redis://localhost:6379/1"), Exercism.redis_client("redis://localhost:6379/2")
+  end
+
+  def test_redis_clients_are_rebuilt_after_fork
+    Exercism.stubs(env: ExercismConfig::Environment.new(:test))
+
+    client = Exercism.redis_cache_client
+    Process.stubs(pid: Process.pid + 1)
+
+    refute_same client, Exercism.redis_cache_client
+  end
+
   def test_cloudfront_client
     cloudfront_client = Exercism.cloudfront_client
     assert_equal "eu-west-2", cloudfront_client.config.region

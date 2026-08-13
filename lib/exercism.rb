@@ -17,16 +17,42 @@ module Exercism
   def self.redis_git_cache_client = redis_client(config.git_cache_redis_url)
   def self.redis_cache_client = redis_client(config.cache_redis_url)
 
+  # Clients are cached per-url because building one is expensive. In production
+  # this is a Redis::Cluster, which does full topology discovery (CLUSTER NODES,
+  # then a connection to every node in the cluster) the first time it runs a
+  # command - measured at ~38ms against production. Callers that talk to Redis
+  # in a loop were paying that on every single call, and discarding all those
+  # connections afterwards.
+  #
+  # redis-rb 5 runs every command through a Monitor, so sharing one instance
+  # across threads is safe. The cache is invalidated on fork so that Puma and
+  # Sidekiq children build their own clients rather than using sockets they
+  # inherited from the parent.
   def self.redis_client(url)
     require 'redis'
     require 'redis-clustering'
 
+    @redis_clients_mutex.synchronize do
+      if @redis_clients_pid != Process.pid
+        @redis_clients = {}
+        @redis_clients_pid = Process.pid
+      end
+
+      @redis_clients[url] ||= new_redis_client(url)
+    end
+  end
+
+  def self.new_redis_client(url)
     if Exercism.env.development? || Exercism.env.test?
       Redis.new(url:)
     else
       Redis::Cluster.new(nodes: [url])
     end
   end
+
+  @redis_clients = {}
+  @redis_clients_pid = Process.pid
+  @redis_clients_mutex = Mutex.new
 
   def self.dynamodb_client
     Aws::DynamoDB::Client.new(ExercismConfig::GenerateAwsSettings.())
