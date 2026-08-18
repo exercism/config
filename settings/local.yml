@@ -31,6 +31,7 @@ mysql_port: null
 # S3 Config
 aws_submissions_bucket: exercism-v3-submissions
 aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
+aws_cache_bucket: exercism-cache
 
 # Hosts
 website_icons_host: https://assets.exercism.org
