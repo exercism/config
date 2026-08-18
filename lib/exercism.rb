@@ -33,18 +33,23 @@ module Exercism
     Aws::DynamoDB::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
+  S3_CLIENT_MUTEX = Mutex.new
+
   # Memoized so the SDK's connection pool is reused, with a raised
   # http_idle_timeout (default 5s) so pooled connections survive quiet
   # spells on low-QPS paths instead of paying a TLS handshake each time.
+  # The mutex guarantees exactly one client per process.
   def self.s3_client
-    @s3_client ||= begin
-      require 'aws-sdk-s3'
-      Aws::S3::Client.new(
-        ExercismConfig::GenerateAwsSettings.().merge(
-          force_path_style: true,
-          http_idle_timeout: 60
+    @s3_client || S3_CLIENT_MUTEX.synchronize do
+      @s3_client ||= begin
+        require 'aws-sdk-s3'
+        Aws::S3::Client.new(
+          ExercismConfig::GenerateAwsSettings.().merge(
+            force_path_style: true,
+            http_idle_timeout: 60
+          )
         )
-      )
+      end
     end
   end
 
