@@ -33,13 +33,19 @@ module Exercism
     Aws::DynamoDB::Client.new(ExercismConfig::GenerateAwsSettings.())
   end
 
+  # Memoized so the SDK's connection pool is reused, with a raised
+  # http_idle_timeout (default 5s) so pooled connections survive quiet
+  # spells on low-QPS paths instead of paying a TLS handshake each time.
   def self.s3_client
-    require 'aws-sdk-s3'
-    Aws::S3::Client.new(
-      ExercismConfig::GenerateAwsSettings.().merge(
-        force_path_style: true
+    @s3_client ||= begin
+      require 'aws-sdk-s3'
+      Aws::S3::Client.new(
+        ExercismConfig::GenerateAwsSettings.().merge(
+          force_path_style: true,
+          http_idle_timeout: 60
+        )
       )
-    )
+    end
   end
 
   def self.ecr_client
