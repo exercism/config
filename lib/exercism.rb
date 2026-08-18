@@ -40,7 +40,7 @@ module Exercism
   # spells on low-QPS paths instead of paying a TLS handshake each time.
   # The mutex guarantees exactly one client per process.
   def self.s3_client
-    @s3_client || S3_CLIENT_MUTEX.synchronize do
+    S3_CLIENT_MUTEX.synchronize do
       @s3_client ||= begin
         require 'aws-sdk-s3'
         Aws::S3::Client.new(
