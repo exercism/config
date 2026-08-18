@@ -25,6 +25,7 @@ Exercism.config.tooling_orchestrator_url
 Exercism.config.language_server_url
 Exercism.config.opensearch_host
 Exercism.config.paypal_api_url
+Exercism.config.assistant_chat_url
 
 # Secrets
 Exercism.secrets.github_access_token
@@ -61,6 +62,8 @@ Exercism.secrets.paypal_premium_yearly_plan_id
 Exercism.secrets.paypal_lifetime_insiders_hosted_button_id
 Exercism.secrets.chatgpt_access_token
 Exercism.secrets.sparkpost_api_key
+Exercism.secrets.assistant_chat_jwt_secret
+Exercism.secrets.assistant_chat_hmac_secret
 Exercism.secrets.openai_api_key
 Exercism.secrets.openai_tags_model
 
