@@ -103,7 +103,7 @@ We use localstack for this.
 To start localstack use the following command:
 
 ```bash
-docker run -dp 3042:8080 -p 3040:4566 -p 3041:4566 localstack/localstack
+docker run -dp 3042:8080 -p 3040:4566 -p 3041:4566 localstack/localstack:2.3.2
 ```
 
 ## Usage

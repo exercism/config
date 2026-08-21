@@ -12,7 +12,8 @@ jobs:
 
     services:
       aws:
-        image: "localstack/localstack"
+        # Pinned to match the website. Later images need a LocalStack licence.
+        image: "localstack/localstack:2.3.2"
         ports:
           - 4566
 
