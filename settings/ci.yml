@@ -31,6 +31,7 @@ mysql_port: <%= ENV["MYSQL_PORT"] %>
 aws_submissions_bucket: exercism-v3-submissions
 aws_tooling_jobs_bucket: exercism-v3-tooling-jobs
 aws_cache_bucket: exercism-cache
+aws_icons_bucket: exercism-v3-icons
 
 # Hosts
 website_icons_host: https://assets.exercism.org
