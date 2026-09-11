@@ -14,6 +14,7 @@ unless ENV["EXERCISM_SKIP_S3"]
   [
     Exercism.config.aws_submissions_bucket,
     Exercism.config.aws_tooling_jobs_bucket,
+    Exercism.config.aws_test_runners_bucket,
   ].each do |bucket|
     begin
       Exercism.s3_client.create_bucket(bucket: bucket)
