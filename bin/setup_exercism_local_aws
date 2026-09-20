@@ -18,7 +18,7 @@ unless ENV["EXERCISM_SKIP_S3"]
   ].each do |bucket|
     begin
       Exercism.s3_client.create_bucket(bucket: bucket)
-    rescue Aws::S3::Errors::BucketAlreadyExists 
+    rescue Aws::S3::Errors::BucketAlreadyExists, Aws::S3::Errors::BucketAlreadyOwnedByYou
       # Bucket already exists
     rescue Seahorse::Client::NetworkingError => e
       puts "local S3 not up yet..."
